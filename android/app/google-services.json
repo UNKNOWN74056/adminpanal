@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "222492616911",
+    "project_id": "mr-sport-441b2",
+    "storage_bucket": "mr-sport-441b2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:222492616911:android:bbed090c0d53d35b6befba",
+        "android_client_info": {
+          "package_name": "com.example.finalyear"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "222492616911-gavdqdd613oogkgfdd610vl92t3a11h7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.finalyear",
+            "certificate_hash": "847849c2aaeb19a2bf7bd1d911294eeb454739bf"
+          }
+        },
+        {
+          "client_id": "222492616911-vblihc3nlk73cgth6cddg9t5h2nr3kb8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfsxqyep3Mr_ulL1NGpRYCxZr8NI70Gkk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "222492616911-vblihc3nlk73cgth6cddg9t5h2nr3kb8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
