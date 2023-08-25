@@ -36,6 +36,7 @@ class Bttomsheetgetx extends GetxController {
     if (value.isEmpty) {
       return "Please enter club name";
     }
+    return null;
   }
 
   String? validEmail(String value) {
@@ -44,23 +45,26 @@ class Bttomsheetgetx extends GetxController {
     } else if (!value.contains("@gmail.com")) {
       return "Please enter correct email";
     }
+    return null;
   }
 
   String? validlocation(String value) {
     if (value.isEmpty) {
       return "Please enter location";
     }
+    return null;
   }
 
   String? validsport(String value) {
     if (value.isEmpty) {
       return "Please enter sport";
     }
+    return null;
   }
 
   String? validphone(String value) {
     String regexPattern = r'(^(?:[+0][1-9])?[0-9]{10,12}$)';
-    var regExp = new RegExp(regexPattern);
+    var regExp = RegExp(regexPattern);
     if (value.isEmpty) {
       return "Please enter phone";
     } else if (!value.contains("+")) {
@@ -84,12 +88,9 @@ class Bttomsheetgetx extends GetxController {
   }
 
   checkbottomsheet() {
-    if (keyForm.currentState!.validate()) {
-      final isValid = keyForm.currentState!.validate();
+    final isValid = keyForm.currentState!.validate();
 
-      if (!isValid) {
-        return null;
-      }
+    if (isValid) {
       keyForm.currentState!.save();
       clubname.value = clubcontroller.value.text;
       email.value = emailcontroller.value.text;
@@ -99,7 +100,6 @@ class Bttomsheetgetx extends GetxController {
       rating.value = ratingcontroller.value.text;
 
       isformValidated = true;
-      // User those values to send our auth request ...
     }
   }
 }

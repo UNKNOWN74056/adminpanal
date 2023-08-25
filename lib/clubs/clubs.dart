@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:admin/GETX/Bttomsheetgetx.dart';
 import 'package:admin/clubs/clubdetails.dart';
-import 'package:admin/widgets/savebutton.dart';
-import 'package:admin/widgets/textform.dart';
+import 'package:admin/widget/addclubdata.dart';
+import 'package:admin/widget/editclub.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -27,6 +27,8 @@ class _clubsState extends State<clubs> {
   final TextEditingController _updateclublocation = TextEditingController();
   final TextEditingController _updateclubsport = TextEditingController();
   final TextEditingController _updateclubphonecontect = TextEditingController();
+
+  var data;
 
   //function to dispose
   @override
@@ -161,156 +163,8 @@ class _clubsState extends State<clubs> {
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          showModalBottomSheet(
-              isScrollControlled: true,
-              shape: const RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.vertical(top: Radius.circular(10))),
-              context: context,
-              builder: (context) => Container(
-                    margin: const EdgeInsets.all(20),
-                    padding: const EdgeInsets.all(8),
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          bottom: MediaQuery.of(context).viewInsets.bottom),
-                      child: Form(
-                        key: controller.keyForm,
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              const SizedBox(
-                                height: 40,
-                              ),
-                              const Text("PLease fill these fields"),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              GestureDetector(
-                                onTap: () async {
-                                  dialogAlert(context);
-                                },
-                                child: Container(
-                                  child: _image == null
-                                      ? CircleAvatar(
-                                          radius: 60,
-                                          child: Image.asset(
-                                            "assets/logo.png",
-                                            height: 90,
-                                            fit: BoxFit.cover,
-                                          ))
-                                      : Image.file(
-                                          _image!.absolute,
-                                          height: 100,
-                                          width: 100,
-                                          fit: BoxFit.cover,
-                                        ),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              //textfields with dailog
-                              reusebletextfield(
-                                  controller: controller.clubcontroller,
-                                  autoValidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  keyboard: TextInputType.name,
-                                  validator: (Value) {
-                                    return controller.validclubname(Value!);
-                                  },
-                                  icon: const Icon(
-                                      FontAwesomeIcons.clipboardUser),
-                                  labelText: "Enter club name"),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              reusebletextfield(
-                                  controller: controller.emailcontroller,
-                                  autoValidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  keyboard: TextInputType.emailAddress,
-                                  validator: (Value) {
-                                    return controller.validEmail(Value!);
-                                  },
-                                  icon: const Icon(
-                                      FontAwesomeIcons.solidEnvelope),
-                                  labelText: "Enter email"),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              reusebletextfield(
-                                  controller: controller.loactioncontroller,
-                                  autoValidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  keyboard: TextInputType.text,
-                                  validator: (Value) {
-                                    return controller.validlocation(Value!);
-                                  },
-                                  icon:
-                                      const Icon(FontAwesomeIcons.locationDot),
-                                  labelText: "Enter location"),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              reusebletextfield(
-                                  controller: controller.sportcontroller,
-                                  autoValidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  keyboard: TextInputType.text,
-                                  validator: (Value) {
-                                    return controller.validsport(Value!);
-                                  },
-                                  icon:
-                                      const Icon(FontAwesomeIcons.locationDot),
-                                  labelText: "Enter sport"),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              reusebletextfield(
-                                  controller: controller.phonecontroller,
-                                  autoValidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  keyboard: TextInputType.phone,
-                                  validator: (Value) {
-                                    return controller.validphone(Value!);
-                                  },
-                                  icon: const Icon(FontAwesomeIcons.phone),
-                                  labelText: "+ code phone number"),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              reusebletextfield(
-                                  controller: controller.ratingcontroller,
-                                  autoValidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  keyboard: TextInputType.number,
-                                  validator: (value) {
-                                    return controller.validateRating(value);
-                                  },
-                                  icon: const Icon(FontAwesomeIcons.star),
-                                  labelText: "Enter rating"),
-                              const SizedBox(
-                                height: 15,
-                              ),
-
-                              //button to add the clubs and save in database
-                              savebutton(
-                                  onTap: () {
-                                    controller.checkbottomsheet();
-                                    if (controller.isformValidated == true) {
-                                      addclub();
-                                      Get.back();
-                                      Get.snackbar("Message",
-                                          "The club has been added.");
-                                    }
-                                  },
-                                  child: const Text("ADD"))
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ));
+          //this is for to add club data
+          Get.to(const clubaddition());
         },
         child: const Icon(Icons.add),
       ),
@@ -325,218 +179,11 @@ class _clubsState extends State<clubs> {
                     var data = snapshot.data!.docs[i];
                     return Slidable(
                       endActionPane:
-                          ActionPane(motion: ScrollMotion(), children: [
+                          ActionPane(motion: const ScrollMotion(), children: [
                         SlidableAction(
                           onPressed: (context) {
-                            showModalBottomSheet(
-                                isScrollControlled: true,
-                                shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.vertical(
-                                        top: Radius.circular(10))),
-                                context: context,
-                                builder: (context) => Container(
-                                      margin: const EdgeInsets.all(20),
-                                      padding: const EdgeInsets.all(8),
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
-                                            bottom: MediaQuery.of(context)
-                                                .viewInsets
-                                                .bottom),
-                                        child: Form(
-                                          key: controller.keyForm,
-                                          child: SingleChildScrollView(
-                                            child: Column(
-                                              children: [
-                                                const SizedBox(
-                                                  height: 40,
-                                                ),
-                                                const Text(
-                                                    "PLease fill these fields"),
-                                                const SizedBox(
-                                                  height: 20,
-                                                ),
-                                                GestureDetector(
-                                                  onTap: () async {
-                                                    dialogAlert(context);
-                                                  },
-                                                  child: Container(
-                                                    child: _image == null
-                                                        ? CircleAvatar(
-                                                            radius: 60,
-                                                            child: Image.asset(
-                                                              "assets/logo.png",
-                                                              height: 90,
-                                                              fit: BoxFit.cover,
-                                                            ))
-                                                        : Image.file(
-                                                            _image!.absolute,
-                                                            height: 100,
-                                                            width: 100,
-                                                            fit: BoxFit.cover,
-                                                          ),
-                                                  ),
-                                                ),
-                                                const SizedBox(
-                                                  height: 10,
-                                                ),
-                                                //textfields with dailog
-                                                reusebletextfield(
-                                                    controller: _updateclubname,
-                                                    autoValidateMode:
-                                                        AutovalidateMode
-                                                            .onUserInteraction,
-                                                    keyboard: TextInputType
-                                                        .emailAddress,
-                                                    validator: (Value) {
-                                                      return controller
-                                                          .validclubname(
-                                                              Value!);
-                                                    },
-                                                    icon: const Icon(
-                                                        FontAwesomeIcons
-                                                            .clipboardUser),
-                                                    labelText:
-                                                        "Enter club name"),
-                                                const SizedBox(
-                                                  height: 5,
-                                                ),
-                                                reusebletextfield(
-                                                    controller:
-                                                        _updateclubeamil,
-                                                    autoValidateMode:
-                                                        AutovalidateMode
-                                                            .onUserInteraction,
-                                                    keyboard: TextInputType
-                                                        .emailAddress,
-                                                    validator: (Value) {
-                                                      return controller
-                                                          .validEmail(Value!);
-                                                    },
-                                                    icon: const Icon(
-                                                        FontAwesomeIcons
-                                                            .solidEnvelope),
-                                                    labelText: "Enter email"),
-                                                const SizedBox(
-                                                  height: 5,
-                                                ),
-                                                reusebletextfield(
-                                                    controller:
-                                                        _updateclublocation,
-                                                    autoValidateMode:
-                                                        AutovalidateMode
-                                                            .onUserInteraction,
-                                                    keyboard:
-                                                        TextInputType.text,
-                                                    validator: (Value) {
-                                                      return controller
-                                                          .validlocation(
-                                                              Value!);
-                                                    },
-                                                    icon: const Icon(
-                                                        FontAwesomeIcons
-                                                            .locationDot),
-                                                    labelText:
-                                                        "Enter location"),
-                                                const SizedBox(
-                                                  height: 5,
-                                                ),
-                                                reusebletextfield(
-                                                    controller:
-                                                        _updateclubsport,
-                                                    autoValidateMode:
-                                                        AutovalidateMode
-                                                            .onUserInteraction,
-                                                    keyboard:
-                                                        TextInputType.text,
-                                                    validator: (Value) {
-                                                      return controller
-                                                          .validsport(Value!);
-                                                    },
-                                                    icon: const Icon(
-                                                        FontAwesomeIcons
-                                                            .locationDot),
-                                                    labelText: "Enter sport"),
-                                                const SizedBox(
-                                                  height: 5,
-                                                ),
-                                                reusebletextfield(
-                                                    controller:
-                                                        _updateclubphonecontect,
-                                                    autoValidateMode:
-                                                        AutovalidateMode
-                                                            .onUserInteraction,
-                                                    keyboard:
-                                                        TextInputType.phone,
-                                                    validator: (Value) {
-                                                      return controller
-                                                          .validphone(Value!);
-                                                    },
-                                                    icon: const Icon(
-                                                        FontAwesomeIcons.phone),
-                                                    labelText:
-                                                        "+ code phone number"),
-                                                const SizedBox(
-                                                  height: 15,
-                                                ),
-                                                //button to add the clubs and save in database
-                                                savebutton(
-                                                    onTap: () async {
-                                                      controller
-                                                          .checkbottomsheet();
-                                                      if (controller
-                                                              .isformValidated ==
-                                                          true) {
-                                                        var refer =
-                                                            await FirebaseStorage
-                                                                .instance
-                                                                .ref("/MrSport")
-                                                                .child('images')
-                                                                .putFile(_image!
-                                                                    .absolute);
-                                                        TaskSnapshot
-                                                            uploadTask = refer;
-                                                        await Future.value(
-                                                            uploadTask);
-                                                        var newUrl = await refer
-                                                            .ref
-                                                            .getDownloadURL();
-                                                        await data.reference
-                                                            .update({
-                                                          'Clubname':
-                                                              _updateclubname
-                                                                  .text
-                                                                  .toString(),
-                                                          'Email':
-                                                              _updateclubeamil
-                                                                  .text
-                                                                  .toString(),
-                                                          'Location':
-                                                              _updateclublocation
-                                                                  .text
-                                                                  .toString(),
-                                                          'Phone':
-                                                              _updateclubphonecontect
-                                                                  .text
-                                                                  .toString(),
-                                                          'sport':
-                                                              _updateclubsport
-                                                                  .text
-                                                                  .toString(),
-                                                          'Clubimage':
-                                                              newUrl.toString()
-                                                        });
-                                                        Get.back();
-                                                        Get.snackbar("Message",
-                                                            "The change has been made.");
-                                                      }
-                                                    },
-                                                    child: const Text("Save"))
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ));
+                            //this is for update the club data
+                            Get.to(editclubpage(data: data));
                           },
                           backgroundColor: const Color(0xFF7BC043),
                           foregroundColor: Colors.white,
@@ -545,6 +192,7 @@ class _clubsState extends State<clubs> {
                         ),
                         SlidableAction(
                           onPressed: (context) {
+                            // this is for to delete the club
                             showDialog(
                                 context: context,
                                 builder: (context) {
