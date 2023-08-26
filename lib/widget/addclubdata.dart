@@ -90,6 +90,20 @@ class _clubadditionState extends State<clubaddition> {
         });
   }
 
+  //overide function for connectivity
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () {
+      Controller.clubcontroller.text = ""; // Clear email text
+      Controller.emailcontroller.text = ""; // Clear password text
+      Controller.loactioncontroller.text = ""; // Clear password text
+      Controller.sportcontroller.text = ""; // Clear password text
+      Controller.phonecontroller.text = ""; // Clear password text
+      Controller.ratingcontroller.text = ""; // Clear password text
+    });
+  }
+
   //add club function
   Future addclub() async {
     String email = Controller.emailcontroller.text.toString();

@@ -102,4 +102,15 @@ class Bttomsheetgetx extends GetxController {
       isformValidated = true;
     }
   }
+
+  @override
+  void dispose() {
+    clubcontroller.dispose();
+    loactioncontroller.dispose();
+    phonecontroller.dispose();
+    ratingcontroller.dispose();
+    emailcontroller.dispose();
+    sportcontroller.dispose();
+    super.dispose();
+  }
 }

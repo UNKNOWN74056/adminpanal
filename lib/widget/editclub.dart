@@ -18,18 +18,22 @@ class editclubpage extends StatefulWidget {
 }
 
 class _editclubpageState extends State<editclubpage> {
+  final TextEditingController _updateclubname = TextEditingController();
+  final TextEditingController _updateclubeamil = TextEditingController();
+  final TextEditingController _updateclublocation = TextEditingController();
+  final TextEditingController _updateclubsport = TextEditingController();
+  final TextEditingController _updateclubphonecontect = TextEditingController();
   String imageUrl = "";
   @override
   void initState() {
     super.initState();
     // Pre-fill form fields with existing data
     final data = widget.data;
-    Controller.clubcontroller.text = data['Clubname'] as String;
-    Controller.emailcontroller.text = data['Email'] as String;
-    Controller.loactioncontroller.text = data['Location'] as String;
-    Controller.sportcontroller.text = data['sport'] as String;
-    Controller.phonecontroller.text = data['Phone'] as String;
-    Controller.ratingcontroller.text = data['rating'] as String;
+    _updateclubname.text = data['Clubname'] as String;
+    _updateclubeamil.text = data['Email'] as String;
+    _updateclublocation.text = data['Location'] as String;
+    _updateclubsport.text = data['sport'] as String;
+    _updateclubphonecontect.text = data['Phone'] as String;
     imageUrl = data['Clubimage'] as String;
   }
 
@@ -115,13 +119,13 @@ class _editclubpageState extends State<editclubpage> {
     await Future.value(uploadTask);
     var newUrl = await refer.ref.getDownloadURL();
     updateClubDetails(
-        Controller.clubcontroller.value.text,
-        Controller.emailcontroller.value.text,
-        Controller.loactioncontroller.value.text,
-        Controller.sportcontroller.value.text,
-        Controller.phonecontroller.value.text,
-        newUrl.toString(),
-        Controller.ratingcontroller.value.text);
+      _updateclubname.value.text,
+      _updateclubeamil.value.text,
+      _updateclublocation.value.text,
+      _updateclubsport.value.text,
+      _updateclubphonecontect.value.text,
+      newUrl.toString(),
+    );
   }
 
   //adding club details
@@ -132,7 +136,6 @@ class _editclubpageState extends State<editclubpage> {
     String sport,
     String phonecontect,
     String imageurl,
-    String rating,
   ) async {
     await FirebaseFirestore.instance.collection('clubs').doc(email).update({
       'Clubname': clubname,
@@ -141,7 +144,9 @@ class _editclubpageState extends State<editclubpage> {
       'sport': sport,
       'Phone': phonecontect,
       'Clubimage': imageurl,
-      'rating': rating
+    });
+    setState(() {
+      imageUrl = imageurl;
     });
   }
 
@@ -184,7 +189,7 @@ class _editclubpageState extends State<editclubpage> {
                                       backgroundColor: Colors.white,
                                     )
                               : Image.file(
-                                  _image!.absolute,
+                                  _image!,
                                   height: 100,
                                   width: 100,
                                   fit: BoxFit.cover,
@@ -198,7 +203,7 @@ class _editclubpageState extends State<editclubpage> {
                     ),
                     //textfields with dailog
                     reusebletextfield(
-                        controller: Controller.clubcontroller,
+                        controller: _updateclubname,
                         autoValidateMode: AutovalidateMode.onUserInteraction,
                         keyboard: TextInputType.name,
                         validator: (Value) {
@@ -211,7 +216,7 @@ class _editclubpageState extends State<editclubpage> {
                     ),
 
                     reusebletextfield(
-                        controller: Controller.loactioncontroller,
+                        controller: _updateclublocation,
                         autoValidateMode: AutovalidateMode.onUserInteraction,
                         keyboard: TextInputType.text,
                         validator: (Value) {
@@ -223,7 +228,7 @@ class _editclubpageState extends State<editclubpage> {
                       height: 5,
                     ),
                     reusebletextfield(
-                        controller: Controller.sportcontroller,
+                        controller: _updateclubsport,
                         autoValidateMode: AutovalidateMode.onUserInteraction,
                         keyboard: TextInputType.text,
                         validator: (Value) {
@@ -235,7 +240,7 @@ class _editclubpageState extends State<editclubpage> {
                       height: 5,
                     ),
                     reusebletextfield(
-                        controller: Controller.phonecontroller,
+                        controller: _updateclubphonecontect,
                         autoValidateMode: AutovalidateMode.onUserInteraction,
                         keyboard: TextInputType.phone,
                         validator: (Value) {
@@ -246,25 +251,13 @@ class _editclubpageState extends State<editclubpage> {
                     const SizedBox(
                       height: 15,
                     ),
-                    reusebletextfield(
-                        controller: Controller.ratingcontroller,
-                        autoValidateMode: AutovalidateMode.onUserInteraction,
-                        keyboard: TextInputType.number,
-                        validator: (value) {
-                          return Controller.validateRating(value);
-                        },
-                        icon: const Icon(FontAwesomeIcons.star),
-                        labelText: "Enter rating"),
-                    const SizedBox(
-                      height: 15,
-                    ),
 
                     //button to add the clubs and save in database
                     savebutton(
                       onTap: () async {
                         Controller.checkbottomsheet();
 
-                        if (_image == null) {
+                        if (imageUrl.isEmpty) {
                           // Show an error message that the user needs to select an image first.
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
@@ -272,26 +265,43 @@ class _editclubpageState extends State<editclubpage> {
                             ),
                           );
                         } else if (Controller.isformValidated == true) {
-                          String clubname =
-                              Controller.clubcontroller.text.toString();
-                          String email =
-                              Controller.emailcontroller.text.toString();
+                          try {
+                            String clubname = _updateclubname.text.toString();
+                            String email = _updateclubeamil.text.toString();
+                            String location =
+                                _updateclublocation.text.toString();
+                            String sport = _updateclubsport.text.toString();
+                            String phone =
+                                _updateclubphonecontect.text.toString();
+                            String image = imageUrl.toString();
 
-                          String location =
-                              Controller.loactioncontroller.text.toString();
-                          String sport =
-                              Controller.sportcontroller.text.toString();
-                          String phone =
-                              Controller.phonecontroller.text.toString();
-                          String image = imageUrl.toString();
-                          String rating =
-                              Controller.ratingcontroller.text.toString();
+                            if (_image != null) {
+                              // Upload new image
+                              String email =
+                                  Controller.emailcontroller.text.toString();
+                              var refer = await FirebaseStorage.instance
+                                  .ref("/MrSport$email")
+                                  .child('profileimage')
+                                  .putFile(_image!.absolute);
+                              TaskSnapshot uploadTask = refer;
+                              await Future.value(uploadTask);
+                              var newUrl = await refer.ref.getDownloadURL();
+                              image = newUrl.toString();
+                            }
 
-                          updateClubDetails(clubname, email, location, sport,
-                              phone, image, rating);
+                            updateClubDetails(
+                                clubname, email, location, sport, phone, image);
 
-                          Get.back();
-                          Get.snackbar("Message", "The club has been updated");
+                            Get.back();
+                            Get.snackbar(
+                                "Message", "The club has been updated");
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text("Error updating club: $e"),
+                              ),
+                            );
+                          }
                         }
                       },
                       child: const Text("Save changes"),

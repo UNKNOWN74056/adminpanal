@@ -21,25 +21,6 @@ class clubs extends StatefulWidget {
 class _clubsState extends State<clubs> {
   //getx controller
   final controller = Get.put(Bttomsheetgetx());
-  //update contorller
-  final TextEditingController _updateclubname = TextEditingController();
-  final TextEditingController _updateclubeamil = TextEditingController();
-  final TextEditingController _updateclublocation = TextEditingController();
-  final TextEditingController _updateclubsport = TextEditingController();
-  final TextEditingController _updateclubphonecontect = TextEditingController();
-
-  var data;
-
-  //function to dispose
-  @override
-  void dispose() {
-    _updateclubeamil.dispose();
-    _updateclublocation.dispose();
-    _updateclubname.dispose();
-    _updateclubphonecontect.dispose();
-    _updateclubsport.dispose();
-    super.dispose();
-  }
 
 //detail page of club
   navigatetodetail(DocumentSnapshot post) {
