@@ -56,8 +56,9 @@ class _edittournamentState extends State<edittournament> {
         lastDate: DateTime(2025));
     if (pickeddate != null) {
       setState(() {
-        String format = DateFormat('yyyy-mm-dd').format(pickeddate);
-        tourcontroller.start_date_controller.text = format.toString();
+        String format =
+            DateFormat('yyyy-MM-dd').format(pickeddate); // Update format
+        _updatetourstartdate.text = format.toString(); // Update controller
       });
     }
   }
@@ -70,15 +71,17 @@ class _edittournamentState extends State<edittournament> {
         lastDate: DateTime(2025));
     if (pickeddate != null) {
       setState(() {
-        String format = DateFormat('yyyy-mm-dd').format(pickeddate);
-        tourcontroller.end_date_controller.text = format.toString();
+        String format =
+            DateFormat('yyyy-MM-dd').format(pickeddate); // Update format
+        _updatetourenddate.text = format.toString(); // Update controller
       });
     }
   }
 
   Future addtour() async {
+    String email = tourcontroller.email_controller.text.toString();
     var refer = await FirebaseStorage.instance
-        .ref("/MrSport")
+        .ref("/MrSport$email")
         .child('tournamentimage')
         .putFile(_image!.absolute);
     TaskSnapshot uploadTask = refer;
@@ -336,16 +339,18 @@ class _edittournamentState extends State<edittournament> {
                             String location =
                                 _updatetourlocation.text.toString();
                             String sport = _updatetoursport.text.toString();
-                            String startdate =
-                                _updatetourstartdate.text.toString();
-                            String enddate = _updatetourenddate.text.toString();
+                            String startdate = _updatetourstartdate.text;
+                            String enddate = _updatetourenddate.text;
                             String price = _updatetourprice.text.toString();
                             String image = imageUrl.toString();
 
                             if (_image != null) {
                               // Upload new image
+                              String email = tourcontroller
+                                  .email_controller.text
+                                  .toString();
                               var refer = await FirebaseStorage.instance
-                                  .ref("/MrSport")
+                                  .ref("/MrSport$email")
                                   .child('tournamentimage')
                                   .putFile(_image!.absolute);
                               TaskSnapshot uploadTask = refer;
