@@ -95,12 +95,12 @@ class _clubadditionState extends State<clubaddition> {
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () {
-      Controller.clubcontroller.text = ""; // Clear email text
-      Controller.emailcontroller.text = ""; // Clear password text
-      Controller.loactioncontroller.text = ""; // Clear password text
-      Controller.sportcontroller.text = ""; // Clear password text
-      Controller.phonecontroller.text = ""; // Clear password text
-      Controller.ratingcontroller.text = ""; // Clear password text
+      Controller.clubcontroller.text = "";
+      Controller.emailcontroller.text = "";
+      Controller.loactioncontroller.text = "";
+      Controller.sportcontroller.text = "";
+      Controller.phonecontroller.text = "";
+      Controller.ratingcontroller.text = "";
     });
   }
 

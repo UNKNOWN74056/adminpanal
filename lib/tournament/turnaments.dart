@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import '../GETX/tournament.dart';
+import '../widget/edittournmaent.dart';
 import '../widgets/textform.dart';
 
 class turnaments extends StatefulWidget {
@@ -18,32 +19,49 @@ class turnaments extends StatefulWidget {
   State<turnaments> createState() => _turnamentsState();
 }
 
-//tournament getx controller
-final tourcontroller = Get.put(tournamentgetx());
+class _turnamentsState extends State<turnaments> {
+  //tournament getx controller
+  final tourcontroller = Get.put(tournamentgetx());
 
-Future addtournmant(
+  Future addtournmant(
     String tournamentname,
     String tournamentlocation,
     String tournamentsport,
     String tournamentimage,
     String startdate,
     String enddate,
-    String price) async {
-  await FirebaseFirestore.instance
-      .collection('tournaments')
-      .doc(tournamentname)
-      .set({
-    'tournamentname': tourcontroller.Tournament_Name.value,
-    'tournamentlocation': tourcontroller.Tournament_Location.value,
-    'tournamentsport': tourcontroller.Tournament_Sport.value,
-    'tournamentimage': tournamentimage,
-    'startdate': tourcontroller.start_date.value,
-    'enddate': tourcontroller.end_date.value,
-    'price': tourcontroller.price.value
-  });
-}
+    String price,
+    String email,
+  ) async {
+    await FirebaseFirestore.instance
+        .collection('tournaments')
+        .doc(tourcontroller.email_controller.text)
+        .set({
+      'tournamentname': tourcontroller.Tournament_Name.value,
+      'tournamentlocation': tourcontroller.Tournament_Location.value,
+      'tournamentsport': tourcontroller.Tournament_Sport.value,
+      'tournamentimage': tournamentimage,
+      'startdate': tourcontroller.start_date.value,
+      'enddate': tourcontroller.end_date.value,
+      'price': tourcontroller.price.value,
+      'email': tourcontroller.email.value,
+    });
+  }
 
-class _turnamentsState extends State<turnaments> {
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () {
+      tourcontroller.Tournament_Name_controller.text = "";
+      tourcontroller.Tournament_Location_controller.text = "";
+      tourcontroller.Tournament_Sport_controller.text = "";
+      tourcontroller.start_date_controller.text = "";
+      tourcontroller.end_date_controller.text = "";
+      tourcontroller.email_controller.text = "";
+      tourcontroller.price_controller.text = "";
+    });
+  }
+
   File? _image;
   final ImagePicker picker = ImagePicker();
 
@@ -91,6 +109,7 @@ class _turnamentsState extends State<turnaments> {
       tourcontroller.start_date_controller.value.text,
       tourcontroller.end_date_controller.value.text,
       tourcontroller.price_controller.value.text,
+      tourcontroller.email_controller.value.text,
     );
   }
 
@@ -259,6 +278,20 @@ class _turnamentsState extends State<turnaments> {
                               height: 5,
                             ),
                             reusebletextfield(
+                                controller: tourcontroller.email_controller,
+                                autoValidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                keyboard: TextInputType.emailAddress,
+                                validator: (Value) {
+                                  return tourcontroller.validEmail(Value!);
+                                },
+                                icon:
+                                    const Icon(FontAwesomeIcons.solidEnvelope),
+                                labelText: "Enter tournament email"),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            reusebletextfield(
                                 controller:
                                     tourcontroller.start_date_controller,
                                 autoValidateMode:
@@ -339,7 +372,9 @@ class _turnamentsState extends State<turnaments> {
                       endActionPane:
                           ActionPane(motion: const ScrollMotion(), children: [
                         SlidableAction(
-                          onPressed: (context) {},
+                          onPressed: (context) {
+                            Get.to(edittournament(data: data));
+                          },
                           backgroundColor: const Color(0xFF7BC043),
                           foregroundColor: Colors.white,
                           icon: Icons.edit,

@@ -39,15 +39,15 @@ class Bttomsheetgetx extends GetxController {
     return null;
   }
 
-  String? validEmail(String value) {
+   String? validEmail(String value) {
     if (value.isEmpty) {
       return "Please enter Email";
-    } else if (!value.contains("@gmail.com")) {
+    } else if (!value.contains("@gmail.com") && !value.contains("@yahoo.com")) {
       return "Please enter correct email";
     }
     return null;
   }
-
+  
   String? validlocation(String value) {
     if (value.isEmpty) {
       return "Please enter location";
