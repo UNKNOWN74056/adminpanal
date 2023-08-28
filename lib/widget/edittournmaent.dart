@@ -50,30 +50,30 @@ class _edittournamentState extends State<edittournament> {
   final ImagePicker picker = ImagePicker();
   Future add_start_date() async {
     DateTime? pickeddate = await showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(2023),
-        lastDate: DateTime(2025));
+      context: context,
+      initialDate: DateFormat('yyyy-MM-dd').parse(_updatetourstartdate.text),
+      firstDate: DateTime(2023),
+      lastDate: DateTime(2025),
+    );
     if (pickeddate != null) {
       setState(() {
-        String format =
-            DateFormat('yyyy-MM-dd').format(pickeddate); // Update format
-        _updatetourstartdate.text = format.toString(); // Update controller
+        String format = DateFormat('yyyy-MM-dd').format(pickeddate);
+        _updatetourstartdate.text = format.toString();
       });
     }
   }
 
   Future add_end_date() async {
     DateTime? pickeddate = await showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(2023),
-        lastDate: DateTime(2025));
+      context: context,
+      initialDate: DateFormat('yyyy-MM-dd').parse(_updatetourenddate.text),
+      firstDate: DateTime(2023),
+      lastDate: DateTime(2025),
+    );
     if (pickeddate != null) {
       setState(() {
-        String format =
-            DateFormat('yyyy-MM-dd').format(pickeddate); // Update format
-        _updatetourenddate.text = format.toString(); // Update controller
+        String format = DateFormat('yyyy-MM-dd').format(pickeddate);
+        _updatetourenddate.text = format.toString();
       });
     }
   }
@@ -87,12 +87,14 @@ class _edittournamentState extends State<edittournament> {
     TaskSnapshot uploadTask = refer;
     await Future.value(uploadTask);
     var newUrl = await refer.ref.getDownloadURL();
+    print("Start Date: ${_updatetourstartdate.text}");
+    print("End Date: ${_updatetourenddate.text}");
     edittournamentdetails(
       _updatetourname.value.text,
       _updatetourlocation.value.text,
       _updatetoursport.value.text,
       _updatetourstartdate.text,
-      _updatetourenddate.value.text,
+      _updatetourenddate.text,
       _updatetourprice.text,
       newUrl.toString(),
     );
@@ -106,6 +108,8 @@ class _edittournamentState extends State<edittournament> {
       String startdate,
       String enddate,
       String price) async {
+    print("Received Start Date: $startdate");
+    print("Received End Date: $enddate");
     await FirebaseFirestore.instance
         .collection('tournaments')
         .doc(tourcontroller.email_controller.text)
@@ -339,8 +343,9 @@ class _edittournamentState extends State<edittournament> {
                             String location =
                                 _updatetourlocation.text.toString();
                             String sport = _updatetoursport.text.toString();
-                            String startdate = _updatetourstartdate.text;
-                            String enddate = _updatetourenddate.text;
+                            String startdate =
+                                _updatetourstartdate.text.toString();
+                            String enddate = _updatetourenddate.text.toString();
                             String price = _updatetourprice.text.toString();
                             String image = imageUrl.toString();
 

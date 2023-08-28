@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:admin/GETX/Bttomsheetgetx.dart';
+import 'package:admin/GETX/clubGetx.dart';
 import 'package:admin/clubs/clubdetails.dart';
 import 'package:admin/widget/addclubdata.dart';
 import 'package:admin/widget/editclub.dart';
@@ -20,7 +20,7 @@ class clubs extends StatefulWidget {
 
 class _clubsState extends State<clubs> {
   //getx controller
-  final controller = Get.put(Bttomsheetgetx());
+  final controller = Get.put(clubGetx());
 
 //detail page of club
   navigatetodetail(DocumentSnapshot post) {

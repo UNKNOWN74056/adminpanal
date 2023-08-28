@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import "package:flutter/material.dart";
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
-import '../GETX/Bttomsheetgetx.dart';
+import '../GETX/clubGetx.dart';
 import "package:get/get.dart";
 import '../widgets/savebutton.dart';
 import '../widgets/textform.dart';
@@ -38,7 +38,7 @@ class _editclubpageState extends State<editclubpage> {
   }
 
   //getx Controller
-  final Controller = Get.put(Bttomsheetgetx());
+  final Controller = Get.put(clubGetx());
   File? _image;
   final ImagePicker picker = ImagePicker();
 
