@@ -34,7 +34,7 @@ class clubGetx extends GetxController {
 
   String? validclubname(String value) {
     if (value.isEmpty) {
-      return "Please enter a full name";
+      return "Please enter a club name";
     } else if (!_isTextOnly(value)) {
       return "Please enter a valid name with only letters";
     }
@@ -68,7 +68,7 @@ class clubGetx extends GetxController {
 
   String? validlocation(String value) {
     if (value.isEmpty) {
-      return "Please enter a full name";
+      return "Please enter a city name";
     } else if (!_isTextOnly(value)) {
       return "Please enter a valid name with only letters";
     }
@@ -77,7 +77,7 @@ class clubGetx extends GetxController {
 
   String? validsport(String value) {
     if (value.isEmpty) {
-      return "Please enter a full name";
+      return "Please enter a sport name";
     } else if (!_isTextOnly(value)) {
       return "Please enter a valid name with only letters";
     }

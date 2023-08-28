@@ -36,21 +36,33 @@ class tournamentgetx extends GetxController {
 
   String? validtourname(String value) {
     if (value.isEmpty) {
-      return "Please enter tournament name";
+      return "Please enter a tournament name";
+    } else if (!_isTextOnly(value)) {
+      return "Please enter a valid name with only letters";
     }
     return null;
   }
 
+  bool _isTextOnly(String value) {
+    // Use a regular expression to match only letters (uppercase and lowercase) and spaces
+    RegExp regex = RegExp(r'^[a-zA-Z\s]+$');
+    return regex.hasMatch(value);
+  }
+
   String? validtourlocation(String value) {
     if (value.isEmpty) {
-      return "Please enter tournament location";
+      return "Please enter city name";
+    } else if (!_isTextOnly(value)) {
+      return "Please enter a valid name with only letters";
     }
     return null;
   }
 
   String? validtoursport(String value) {
     if (value.isEmpty) {
-      return "Please enter tournament sport";
+      return "Please enter sport name";
+    } else if (!_isTextOnly(value)) {
+      return "Please enter a valid name with only letters";
     }
     return null;
   }
@@ -58,6 +70,8 @@ class tournamentgetx extends GetxController {
   String? validstartdate(String value) {
     if (value.isEmpty) {
       return "Please enter start date";
+    } else if (!RegExp(r'^\d+$').hasMatch(value)) {
+      return "Please enter a valid numeric end date";
     }
     return null;
   }
@@ -65,22 +79,36 @@ class tournamentgetx extends GetxController {
   String? validenddate(String value) {
     if (value.isEmpty) {
       return "Please enter end date";
+    } else if (!RegExp(r'^\d+$').hasMatch(value)) {
+      return "Please enter a valid numeric end date";
     }
     return null;
   }
 
   String? valideprice(String value) {
     if (value.isEmpty) {
-      return "Please enter accurate price";
+      return "Please enter price";
+    } else if (!RegExp(r'^\d+$').hasMatch(value)) {
+      return "Please enter a valid price";
     }
     return null;
   }
 
   String? validEmail(String value) {
     if (value.isEmpty) {
-      return "Please enter Email";
-    } else if (!value.contains("@gmail.com") && !value.contains("@yahoo.com")) {
-      return "Please enter correct email";
+      return "Please enter an email";
+    } else if (!value.contains("@gmail.com") &&
+        !value.contains("@yahoo.com") &&
+        !value.contains("@cusite.com") &&
+        !value.contains("@hotmail.com")) {
+      return "Please enter a valid email";
+    } else if (value.endsWith("@gmail.com") ||
+        value.endsWith("@yahoo.com") ||
+        value.endsWith("@cusite.com") ||
+        value.endsWith("@hotmail.com")) {
+      if (value.startsWith("@")) {
+        return "Please enter a valid email with a username";
+      }
     }
     return null;
   }

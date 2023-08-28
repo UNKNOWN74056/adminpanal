@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:admin/GETX/fullscreen.dart';
 import 'package:get/get.dart';
 import 'package:admin/GETX/getclubdata.dart';
 import 'package:admin/widgets/savebutton.dart';
@@ -7,6 +6,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../GETX/fullscreen.dart';
 
 class clubdetail extends StatefulWidget {
   final DocumentSnapshot post;
@@ -142,32 +143,51 @@ class _clubdetailState extends State<clubdetail> {
                             onTap: () async {
                               dialogAlert(context);
                             },
-                            child: Container(
-                              child: photo == null
-                                  ? CircleAvatar(
-                                      radius: 60,
-                                      child: Image.asset(
-                                        "assets/logo.png",
-                                        height: 90,
-                                        fit: BoxFit.cover,
-                                      ))
-                                  : Image.file(
-                                      photo!.absolute,
-                                      height: 100,
-                                      width: 100,
-                                      fit: BoxFit.cover,
-                                    ),
-                            ),
+                            child: photo == null
+                                ? Column(
+                                    children: [
+                                      CircleAvatar(
+                                        radius: 60,
+                                        child: Image.asset(
+                                          "assets/logo.png",
+                                          height: 90,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                : Image.file(
+                                    photo!.absolute,
+                                    height: 100,
+                                    width: 100,
+                                    fit: BoxFit.cover,
+                                  ),
+                          ),
+                          const SizedBox(
+                            height: 20,
                           ),
                           savebutton(
-                              onTap: () {
+                            onTap: () {
+                              if (photo == null) {
+                                // Show an error message if the photo is not selected
+                                Get.snackbar(
+                                  "Error",
+                                  "Please select a photo before saving",
+                                  backgroundColor: Colors.red,
+                                  colorText: Colors.white,
+                                );
+                              } else {
+                                // Photo is selected, proceed with saving
                                 clubphoto();
-
                                 Get.back();
                                 Get.snackbar(
-                                    "Message", "The photo has been added");
-                              },
-                              child: const Text("Add"))
+                                  "Message",
+                                  "The photo has been added",
+                                );
+                              }
+                            },
+                            child: const Text("Add"),
+                          ),
                         ])))));
           },
           label: const Text("Add photos"),
