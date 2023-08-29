@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import '../widget/edittournmaent.dart';
+import "package:intl/intl.dart";
 
 class turnaments extends StatefulWidget {
   const turnaments({super.key});
@@ -35,6 +36,12 @@ class _turnamentsState extends State<turnaments> {
                   shrinkWrap: true,
                   itemBuilder: (context, i) {
                     var data = snapshot.data!.docs[i];
+                    //changing timestamp to datetime object
+                    Timestamp startDateTimestamp = data['startdate'];
+                    Timestamp endDateTimestamp = data['enddate'];
+                    DateTime startDate = startDateTimestamp.toDate();
+                    DateTime endDate = endDateTimestamp.toDate();
+                    ////////////////////////////////////////////////
                     return Slidable(
                       endActionPane:
                           ActionPane(motion: const ScrollMotion(), children: [
@@ -148,7 +155,7 @@ class _turnamentsState extends State<turnaments> {
                                           children: [
                                             const Icon(
                                               Icons.schedule,
-                                              color: Colors.red,
+                                              color: Colors.green,
                                             ),
                                             const SizedBox(width: 5),
                                             const Text(
@@ -156,7 +163,8 @@ class _turnamentsState extends State<turnaments> {
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold),
                                             ),
-                                            Text(data['startdate']),
+                                            Text(DateFormat('yyyy-MM-dd HH:mm')
+                                                .format(startDate)),
                                           ],
                                         ),
                                       ),
@@ -171,14 +179,15 @@ class _turnamentsState extends State<turnaments> {
                                       children: [
                                         const Icon(
                                           Icons.schedule,
-                                          color: Colors.green,
+                                          color: Colors.red,
                                         ),
                                         const Text(
                                           "End At: ",
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold),
                                         ),
-                                        Text(data['enddate'])
+                                        Text(DateFormat('yyyy-MM-dd HH:mm')
+                                            .format(endDate)),
                                       ],
                                     ),
                                   ),

@@ -70,8 +70,6 @@ class tournamentgetx extends GetxController {
   String? validstartdate(String value) {
     if (value.isEmpty) {
       return "Please enter start date";
-    } else if (!RegExp(r'^\d+$').hasMatch(value)) {
-      return "Please enter a valid numeric end date";
     }
     return null;
   }
@@ -79,8 +77,6 @@ class tournamentgetx extends GetxController {
   String? validenddate(String value) {
     if (value.isEmpty) {
       return "Please enter end date";
-    } else if (!RegExp(r'^\d+$').hasMatch(value)) {
-      return "Please enter a valid numeric end date";
     }
     return null;
   }

@@ -234,7 +234,7 @@ class _editclubpageState extends State<editclubpage> {
                         validator: (Value) {
                           return Controller.validsport(Value!);
                         },
-                        icon: const Icon(FontAwesomeIcons.locationDot),
+                        icon: const Icon(FontAwesomeIcons.futbol),
                         labelText: "Enter sport"),
                     const SizedBox(
                       height: 5,

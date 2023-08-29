@@ -6,10 +6,8 @@ import "package:get/get.dart";
 import 'package:firebase_storage/firebase_storage.dart';
 import '../GETX/tournament.dart';
 import 'package:intl/intl.dart';
-
 import 'package:image_picker/image_picker.dart';
 import 'package:admin/widgets/savebutton.dart';
-
 import '../widgets/textform.dart';
 
 class edittournament extends StatefulWidget {
@@ -40,21 +38,27 @@ class _edittournamentState extends State<edittournament> {
     _updatetourname.text = data['tournamentname'] as String;
     _updatetourlocation.text = data['tournamentlocation'] as String;
     _updatetoursport.text = data['tournamentsport'] as String;
-    _updatetourstartdate.text = data['startdate'] as String;
-    _updatetourenddate.text = data['enddate'] as String;
+    // Convert Timestamp fields to strings using DateFormat
+    Timestamp startDateTimestamp = data['startdate'] as Timestamp;
+    Timestamp endDateTimestamp = data['enddate'] as Timestamp;
+    _updatetourstartdate.text =
+        DateFormat('yyyy-MM-dd').format(startDateTimestamp.toDate());
+    _updatetourenddate.text =
+        DateFormat('yyyy-MM-dd').format(endDateTimestamp.toDate());
     _updatetourprice.text = data['price'] as String;
     imageUrl = data['tournamentimage'] as String;
   }
 
   File? _image;
   final ImagePicker picker = ImagePicker();
-  Future add_start_date() async {
+  void add_start_date() async {
     DateTime? pickeddate = await showDatePicker(
       context: context,
       initialDate: DateFormat('yyyy-MM-dd').parse(_updatetourstartdate.text),
       firstDate: DateTime(2023),
       lastDate: DateTime(2025),
     );
+
     if (pickeddate != null) {
       setState(() {
         String format = DateFormat('yyyy-MM-dd').format(pickeddate);
@@ -63,13 +67,14 @@ class _edittournamentState extends State<edittournament> {
     }
   }
 
-  Future add_end_date() async {
+  void add_end_date() async {
     DateTime? pickeddate = await showDatePicker(
       context: context,
-      initialDate: DateFormat('yyyy-MM-dd').parse(_updatetourenddate.text),
+      initialDate: DateFormat('yyyy-MM-dd').parse(_updatetourstartdate.text),
       firstDate: DateTime(2023),
       lastDate: DateTime(2025),
     );
+
     if (pickeddate != null) {
       setState(() {
         String format = DateFormat('yyyy-MM-dd').format(pickeddate);
@@ -78,7 +83,7 @@ class _edittournamentState extends State<edittournament> {
     }
   }
 
-  Future addtour() async {
+  Future updatetour() async {
     String email = tourcontroller.email_controller.text.toString();
     var refer = await FirebaseStorage.instance
         .ref("/MrSport$email")
@@ -87,8 +92,7 @@ class _edittournamentState extends State<edittournament> {
     TaskSnapshot uploadTask = refer;
     await Future.value(uploadTask);
     var newUrl = await refer.ref.getDownloadURL();
-    print("Start Date: ${_updatetourstartdate.text}");
-    print("End Date: ${_updatetourenddate.text}");
+
     edittournamentdetails(
       _updatetourname.value.text,
       _updatetourlocation.value.text,
@@ -108,8 +112,11 @@ class _edittournamentState extends State<edittournament> {
       String startdate,
       String enddate,
       String price) async {
-    print("Received Start Date: $startdate");
-    print("Received End Date: $enddate");
+    // Convert updated date strings to Firestore Timestamps
+    Timestamp startDateTimestamp =
+        Timestamp.fromDate(DateTime.parse(startdate));
+    Timestamp endDateTimestamp = Timestamp.fromDate(DateTime.parse(enddate));
+
     await FirebaseFirestore.instance
         .collection('tournaments')
         .doc(tourcontroller.email_controller.text)
@@ -118,8 +125,8 @@ class _edittournamentState extends State<edittournament> {
       'tournamentlocation': tournamentlocation,
       'tournamentsport': tournamentsport,
       'tournamentimage': tournamentimage,
-      'startdate': startdate,
-      'enddate': enddate,
+      'startdate': startDateTimestamp,
+      'enddate': endDateTimestamp,
       'price': price,
     });
   }
@@ -365,6 +372,7 @@ class _edittournamentState extends State<edittournament> {
 
                             edittournamentdetails(tourname, location, sport,
                                 image, startdate, enddate, price);
+                            updatetour();
 
                             Get.back();
                             Get.snackbar(

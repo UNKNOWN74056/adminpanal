@@ -26,8 +26,8 @@ class _tournamentadditionState extends State<tournamentaddition> {
     String tournamentlocation,
     String tournamentsport,
     String tournamentimage,
-    String startdate,
-    String enddate,
+    DateTime startdate,
+    DateTime enddate,
     String price,
     String email,
   ) async {
@@ -39,8 +39,8 @@ class _tournamentadditionState extends State<tournamentaddition> {
       'tournamentlocation': tourcontroller.Tournament_Location.value,
       'tournamentsport': tourcontroller.Tournament_Sport.value,
       'tournamentimage': tournamentimage,
-      'startdate': tourcontroller.start_date.value,
-      'enddate': tourcontroller.end_date.value,
+      'startdate': startdate,
+      'enddate': enddate,
       'price': tourcontroller.price.value,
       'email': tourcontroller.email.value,
     });
@@ -104,13 +104,17 @@ class _tournamentadditionState extends State<tournamentaddition> {
     TaskSnapshot uploadTask = refer;
     await Future.value(uploadTask);
     var newUrl = await refer.ref.getDownloadURL();
+    DateTime startDate =
+        DateTime.parse(tourcontroller.start_date_controller.value.text);
+    DateTime endDate =
+        DateTime.parse(tourcontroller.end_date_controller.value.text);
     addtournmant(
       tourcontroller.Tournament_Name_controller.value.text,
       tourcontroller.Tournament_Location_controller.value.text,
       tourcontroller.Tournament_Sport_controller.value.text,
       newUrl.toString(),
-      tourcontroller.start_date_controller.value.text,
-      tourcontroller.end_date_controller.value.text,
+      startDate,
+      endDate,
       tourcontroller.price_controller.value.text,
       tourcontroller.email_controller.value.text,
     );
