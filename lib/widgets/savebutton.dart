@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class savebutton extends StatelessWidget {
   final Function()? onTap;
-  final child;
+  final Widget child;
 
   const savebutton({super.key, required this.onTap, required this.child});
 
@@ -16,7 +16,13 @@ class savebutton extends StatelessWidget {
         decoration: BoxDecoration(
             color: Colors.blueGrey, borderRadius: BorderRadius.circular(8)),
         child: Center(
-          child: child,
+          child: Center(
+            child: DefaultTextStyle.merge(
+              style: const TextStyle(
+                  color: Colors.white), // Set the text color to white
+              child: child,
+            ),
+          ),
         ),
       ),
     );
