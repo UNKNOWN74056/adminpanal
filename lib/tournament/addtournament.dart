@@ -324,19 +324,28 @@ class _tournamentadditionState extends State<tournamentaddition> {
                       savebutton(
                           onTap: () {
                             tourcontroller.checktourbottomsheet();
-                            if (_image == null) {
-                              // Show an error message that the user needs to select an image first.
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content:
-                                      Text("Please select an image first."),
-                                ),
-                              );
-                            } else if (tourcontroller.isformValide == true) {
-                              addtour();
-                              Get.back();
+                            try {
+                              if (_image == null) {
+                                // Show an error message that the user needs to select an image first.
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content:
+                                        Text("Please select an image first."),
+                                  ),
+                                );
+                              } else if (tourcontroller.isformValide == true) {
+                                addtour();
+                                Get.back();
+                                Get.snackbar(
+                                    'Message', 'The tournament has been added',
+                                    backgroundColor: Colors.green,
+                                    colorText: Colors.white);
+                              }
+                            } catch (e) {
                               Get.snackbar(
-                                  'Message', 'The tournament has been added');
+                                  'Error', 'Error while adding tournament.',
+                                  backgroundColor: Colors.red,
+                                  colorText: Colors.white);
                             }
                           },
                           child: const Text("Add"))

@@ -368,12 +368,17 @@ class _edittournamentState extends State<edittournament> {
 
                             Get.back();
                             Get.snackbar(
-                                "Message", "The tournament has been updated");
+                              "Message",
+                              "The tournament has been updated",
+                              backgroundColor: Colors.green,
+                              colorText: Colors.white,
+                            );
                           } catch (e) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text("Error updating tournament: $e"),
-                              ),
+                            Get.snackbar(
+                              "Error",
+                              "Error while updating tournament.",
+                              backgroundColor: Colors.red,
+                              colorText: Colors.white,
                             );
                           }
                         }

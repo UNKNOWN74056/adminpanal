@@ -294,12 +294,17 @@ class _editclubpageState extends State<editclubpage> {
 
                             Get.back();
                             Get.snackbar(
-                                "Message", "The club has been updated");
+                              "Message",
+                              "The club has been updated",
+                              backgroundColor: Colors.green,
+                              colorText: Colors.white,
+                            );
                           } catch (e) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text("Error updating club: $e"),
-                              ),
+                            Get.snackbar(
+                              "Error",
+                              "Error while updating club.",
+                              backgroundColor: Colors.red,
+                              colorText: Colors.white,
                             );
                           }
                         }

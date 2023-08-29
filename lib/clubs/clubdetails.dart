@@ -183,6 +183,8 @@ class _clubdetailState extends State<clubdetail> {
                                 Get.snackbar(
                                   "Message",
                                   "The photo has been added",
+                                  backgroundColor: Colors.green,
+                                  colorText: Colors.white,
                                 );
                               }
                             },

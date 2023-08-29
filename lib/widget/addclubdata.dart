@@ -265,17 +265,29 @@ class _clubadditionState extends State<clubaddition> {
                     savebutton(
                         onTap: () {
                           Controller.checkbottomsheet();
-                          if (_image == null) {
-                            // Show an error message that the user needs to select an image first.
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text("Please select an image first."),
-                              ),
-                            );
-                          } else if (Controller.isformValidated == true) {
-                            addclub();
-                            Get.back();
-                            Get.snackbar("Message", "The club has been added.");
+                          try {
+                            if (_image == null) {
+                              // Show an error message that the user needs to select an image first.
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content:
+                                      Text("Please select an image first."),
+                                ),
+                              );
+                            } else if (Controller.isformValidated == true) {
+                              addclub();
+                              Get.back();
+                              Get.snackbar(
+                                "Message",
+                                "The club has been added.",
+                                backgroundColor: Colors.green,
+                                colorText: Colors.white,
+                              );
+                            }
+                          } catch (e) {
+                            Get.snackbar('Error', 'Error while adding club.',
+                                backgroundColor: Colors.red,
+                                colorText: Colors.white);
                           }
                         },
                         child: const Text("ADD"))
