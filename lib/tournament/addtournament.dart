@@ -39,8 +39,8 @@ class _tournamentadditionState extends State<tournamentaddition> {
       'tournamentlocation': tourcontroller.Tournament_Location.value,
       'tournamentsport': tourcontroller.Tournament_Sport.value,
       'tournamentimage': tournamentimage,
-      'startdate': startdate,
-      'enddate': enddate,
+      'startdate': Timestamp.fromDate(startdate), // Convert to Timestamp
+      'enddate': Timestamp.fromDate(enddate),
       'price': tourcontroller.price.value,
       'email': tourcontroller.email.value,
     });

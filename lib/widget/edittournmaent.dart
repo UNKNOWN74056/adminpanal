@@ -28,6 +28,7 @@ class _edittournamentState extends State<edittournament> {
   final TextEditingController _updatetourstartdate = TextEditingController();
   final TextEditingController _updatetourenddate = TextEditingController();
   final TextEditingController _updatetourprice = TextEditingController();
+  final TextEditingController _updateemail = TextEditingController();
   String imageUrl = "";
 
   @override
@@ -38,6 +39,7 @@ class _edittournamentState extends State<edittournament> {
     _updatetourname.text = data['tournamentname'] as String;
     _updatetourlocation.text = data['tournamentlocation'] as String;
     _updatetoursport.text = data['tournamentsport'] as String;
+    _updateemail.text = data['email'] as String;
     // Convert Timestamp fields to strings using DateFormat
     Timestamp startDateTimestamp = data['startdate'] as Timestamp;
     Timestamp endDateTimestamp = data['enddate'] as Timestamp;
@@ -119,7 +121,7 @@ class _edittournamentState extends State<edittournament> {
 
     await FirebaseFirestore.instance
         .collection('tournaments')
-        .doc(tourcontroller.email_controller.text)
+        .doc(_updateemail.text)
         .update({
       'tournamentname': tournamentname,
       'tournamentlocation': tournamentlocation,
