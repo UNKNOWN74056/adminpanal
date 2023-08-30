@@ -192,7 +192,9 @@ class _clubsState extends State<clubs> {
                                             await data.reference.delete();
 
                                             Get.snackbar("Message",
-                                                "Club has been deleted");
+                                                "Club has been deleted",
+                                                backgroundColor: Colors.red,
+                                                colorText: Colors.white);
                                             Navigator.of(context).pop();
                                           },
                                           child: const Text("Yes")),

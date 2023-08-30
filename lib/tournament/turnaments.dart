@@ -73,7 +73,9 @@ class _turnamentsState extends State<turnaments> {
                                           onPressed: () async {
                                             await data.reference.delete();
                                             Get.snackbar("Message",
-                                                "Tournament has been deleted");
+                                                "Tournament has been deleted",
+                                                backgroundColor: Colors.red,
+                                                colorText: Colors.white);
                                             Navigator.of(context).pop();
                                           },
                                           child: const Text("Yes")),
