@@ -17,27 +17,29 @@ class _MyadimnPageState extends State<MyadimnPage> {
   Widget build(BuildContext context) {
     return DefaultTabController(
         length: 2,
-        child: Scaffold(
-          appBar: AppBar(
-            centerTitle: true,
-            title: const Text("Admin panel"),
-            bottom: const TabBar(
-              indicatorColor: Colors.black,
-              indicatorWeight: 3,
-              tabs: [Text("Clubs"), Text("Turnaments")],
+        child: SafeArea(
+          child: Scaffold(
+            appBar: AppBar(
+              centerTitle: true,
+              title: const Text("Admin panel"),
+              bottom: const TabBar(
+                indicatorColor: Colors.black,
+                indicatorWeight: 3,
+                tabs: [Text("Clubs"), Text("Turnaments")],
+              ),
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: GestureDetector(
+                      onTap: () {
+                        Get.to(AdminApprovalScreen());
+                      },
+                      child: const Icon(FontAwesomeIcons.bell)),
+                )
+              ],
             ),
-            actions: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: GestureDetector(
-                    onTap: () {
-                      Get.to(AdminApprovalScreen());
-                    },
-                    child: const Icon(FontAwesomeIcons.bell)),
-              )
-            ],
+            body: const TabBarView(children: [clubs(), turnaments()]),
           ),
-          body: const TabBarView(children: [clubs(), turnaments()]),
         ));
   }
 }

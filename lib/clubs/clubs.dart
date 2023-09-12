@@ -139,111 +139,113 @@ class _clubsState extends State<clubs> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      //floating action button
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          //this is for to add club data
-          Get.to(const clubaddition());
-        },
-        child: const Icon(Icons.add),
-      ),
-      body: StreamBuilder(
-          stream: FirebaseFirestore.instance.collection('clubs').snapshots(),
-          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.hasData) {
-              return ListView.builder(
-                  itemCount: snapshot.data!.docs.length,
-                  shrinkWrap: true,
-                  itemBuilder: (context, i) {
-                    var data = snapshot.data!.docs[i];
-                    return Slidable(
-                      endActionPane:
-                          ActionPane(motion: const ScrollMotion(), children: [
-                        SlidableAction(
-                          onPressed: (context) {
-                            //this is for update the club data
-                            Get.to(editclubpage(data: data));
-                          },
-                          backgroundColor: const Color(0xFF7BC043),
-                          foregroundColor: Colors.white,
-                          icon: Icons.edit,
-                          label: 'Edit',
-                        ),
-                        SlidableAction(
-                          onPressed: (context) {
-                            // this is for to delete the club
-                            showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    title: const Text("Delete Club"),
-                                    content: const Text(
-                                        "Are you sure you want to delete?"),
-                                    actions: [
-                                      TextButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: const Text("Cancel")),
-                                      TextButton(
-                                          onPressed: () async {
-                                            await data.reference.delete();
+    return SafeArea(
+      child: Scaffold(
+        //floating action button
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            //this is for to add club data
+            Get.to(const clubaddition());
+          },
+          child: const Icon(Icons.add),
+        ),
+        body: StreamBuilder(
+            stream: FirebaseFirestore.instance.collection('clubs').snapshots(),
+            builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (snapshot.hasData) {
+                return ListView.builder(
+                    itemCount: snapshot.data!.docs.length,
+                    shrinkWrap: true,
+                    itemBuilder: (context, i) {
+                      var data = snapshot.data!.docs[i];
+                      return Slidable(
+                        endActionPane:
+                            ActionPane(motion: const ScrollMotion(), children: [
+                          SlidableAction(
+                            onPressed: (context) {
+                              //this is for update the club data
+                              Get.to(editclubpage(data: data));
+                            },
+                            backgroundColor: const Color(0xFF7BC043),
+                            foregroundColor: Colors.white,
+                            icon: Icons.edit,
+                            label: 'Edit',
+                          ),
+                          SlidableAction(
+                            onPressed: (context) {
+                              // this is for to delete the club
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      title: const Text("Delete Club"),
+                                      content: const Text(
+                                          "Are you sure you want to delete?"),
+                                      actions: [
+                                        TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: const Text("Cancel")),
+                                        TextButton(
+                                            onPressed: () async {
+                                              await data.reference.delete();
 
-                                            Get.snackbar("Message",
-                                                "Club has been deleted",
-                                                backgroundColor: Colors.red,
-                                                colorText: Colors.white);
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: const Text("Yes")),
-                                    ],
-                                  );
-                                });
-                          },
-                          backgroundColor:
-                              const Color.fromARGB(255, 241, 39, 12),
-                          foregroundColor: Colors.white,
-                          icon: FontAwesomeIcons.trash,
-                          label: 'Delete',
+                                              Get.snackbar("Message",
+                                                  "Club has been deleted",
+                                                  backgroundColor: Colors.red,
+                                                  colorText: Colors.white);
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: const Text("Yes")),
+                                      ],
+                                    );
+                                  });
+                            },
+                            backgroundColor:
+                                const Color.fromARGB(255, 241, 39, 12),
+                            foregroundColor: Colors.white,
+                            icon: FontAwesomeIcons.trash,
+                            label: 'Delete',
+                          ),
+                        ]),
+                        child: Column(
+                          children: [
+                            GestureDetector(
+                                onTap: () => navigatetodetail(data),
+                                child: Card(
+                                  color: Colors.grey.shade300,
+                                  shape: RoundedRectangleBorder(
+                                    side: const BorderSide(
+                                        color: Color.fromARGB(255, 25, 9, 117),
+                                        width: 1),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: ListTile(
+                                    title: Text(data["Clubname"],
+                                        style: const TextStyle(fontSize: 20)),
+                                    leading: CircleAvatar(
+                                        radius: 35,
+                                        backgroundImage:
+                                            NetworkImage(data['Clubimage']),
+                                        backgroundColor: Colors.white),
+                                    subtitle: Text(data["Location"],
+                                        style: const TextStyle(fontSize: 15)),
+                                    trailing:
+                                        const Icon(FontAwesomeIcons.arrowRight),
+                                  ),
+                                )),
+                          ],
                         ),
-                      ]),
-                      child: Column(
-                        children: [
-                          GestureDetector(
-                              onTap: () => navigatetodetail(data),
-                              child: Card(
-                                color: Colors.grey.shade300,
-                                shape: RoundedRectangleBorder(
-                                  side: const BorderSide(
-                                      color: Color.fromARGB(255, 25, 9, 117),
-                                      width: 1),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: ListTile(
-                                  title: Text(data["Clubname"],
-                                      style: const TextStyle(fontSize: 20)),
-                                  leading: CircleAvatar(
-                                      radius: 35,
-                                      backgroundImage:
-                                          NetworkImage(data['Clubimage']),
-                                      backgroundColor: Colors.white),
-                                  subtitle: Text(data["Location"],
-                                      style: const TextStyle(fontSize: 15)),
-                                  trailing:
-                                      const Icon(FontAwesomeIcons.arrowRight),
-                                ),
-                              )),
-                        ],
-                      ),
-                    );
-                  });
-            }
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }),
+                      );
+                    });
+              }
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }),
+      ),
     );
   }
 }

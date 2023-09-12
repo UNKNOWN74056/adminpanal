@@ -188,173 +188,184 @@ class _tournamentadditionState extends State<tournamentaddition> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Container(
-            margin: const EdgeInsets.all(20),
-            padding: const EdgeInsets.all(8),
-            child: SingleChildScrollView(
-              child: Column(children: [
-                Form(
-                    key: tourcontroller.tourkeyForm,
-                    child: SingleChildScrollView(
-                        child: Column(children: [
-                      const SizedBox(
-                        height: 40,
-                      ),
-                      const Text("PLease fill these fields"),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      GestureDetector(
-                        onTap: () async {
-                          dialogAlert(context);
-                        },
-                        child: Container(
-                          child: _image == null
-                              ? CircleAvatar(
-                                  radius: 60,
-                                  child: Image.asset(
-                                    "assets/logo.png",
-                                    height: 90,
-                                    fit: BoxFit.cover,
-                                  ))
-                              : Image.file(
-                                  _image!.absolute,
-                                  height: 100,
-                                  width: 100,
-                                  fit: BoxFit.cover,
-                                ),
+    return SafeArea(
+      child: Scaffold(
+          body: Container(
+              margin: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(8),
+              child: SingleChildScrollView(
+                child: Column(children: [
+                  Form(
+                      key: tourcontroller.tourkeyForm,
+                      child: SingleChildScrollView(
+                          child: Column(children: [
+                        const SizedBox(
+                          height: 40,
                         ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      reusebletextfield(
-                          controller: tourcontroller.Tournament_Name_controller,
-                          autoValidateMode: AutovalidateMode.onUserInteraction,
-                          keyboard: TextInputType.name,
-                          validator: (Value) {
-                            return tourcontroller.validtourname(Value!);
+                        const Text("PLease fill these fields"),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        GestureDetector(
+                          onTap: () async {
+                            dialogAlert(context);
                           },
-                          icon: const Icon(FontAwesomeIcons.clipboardUser),
-                          labelText: "Enter tournamanet name"),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      reusebletextfield(
-                          controller:
-                              tourcontroller.Tournament_Location_controller,
-                          autoValidateMode: AutovalidateMode.onUserInteraction,
-                          keyboard: TextInputType.name,
-                          validator: (Value) {
-                            return tourcontroller.validtourlocation(Value!);
-                          },
-                          icon: const Icon(FontAwesomeIcons.locationDot),
-                          labelText: "Enter tournament location"),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      reusebletextfield(
-                          controller:
-                              tourcontroller.Tournament_Sport_controller,
-                          autoValidateMode: AutovalidateMode.onUserInteraction,
-                          keyboard: TextInputType.name,
-                          validator: (Value) {
-                            return tourcontroller.validtoursport(Value!);
-                          },
-                          icon: const Icon(FontAwesomeIcons.futbol),
-                          labelText: "Enter your tournament sports"),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      reusebletextfield(
-                          controller: tourcontroller.email_controller,
-                          autoValidateMode: AutovalidateMode.onUserInteraction,
-                          keyboard: TextInputType.emailAddress,
-                          validator: (Value) {
-                            return tourcontroller.validEmail(Value!);
-                          },
-                          icon: const Icon(FontAwesomeIcons.solidEnvelope),
-                          labelText: "Enter tournament email"),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      reusebletextfield(
-                          controller: tourcontroller.start_date_controller,
-                          autoValidateMode: AutovalidateMode.onUserInteraction,
-                          // keyboard: TextInputType.datetime,
-                          validator: (Value) {
-                            return tourcontroller.validstartdate(Value!);
-                          },
-                          icon: const Icon(Icons.schedule),
-                          sufix: GestureDetector(
-                              onTap: () {
-                                add_start_date();
-                              },
-                              child: const Icon(FontAwesomeIcons.calendar)),
-                          labelText: "Enter your start date"),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      reusebletextfield(
-                          controller: tourcontroller.end_date_controller,
-                          autoValidateMode: AutovalidateMode.onUserInteraction,
-                          //keyboard: TextInputType.datetime,
-                          validator: (Value) {
-                            return tourcontroller.validenddate(Value!);
-                          },
-                          icon: const Icon(Icons.schedule),
-                          sufix: GestureDetector(
-                              onTap: () {
-                                add_end_date();
-                              },
-                              child: const Icon(FontAwesomeIcons.calendar)),
-                          labelText: "Enter your end date"),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      reusebletextfield(
-                          controller: tourcontroller.price_controller,
-                          autoValidateMode: AutovalidateMode.onUserInteraction,
-                          keyboard: TextInputType.number,
-                          validator: (Value) {
-                            return tourcontroller.valideprice(Value!);
-                          },
-                          icon: const Icon(Icons.attach_money),
-                          labelText: "Enter your tournament price"),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      savebutton(
-                          onTap: () {
-                            tourcontroller.checktourbottomsheet();
-                            try {
-                              if (_image == null) {
-                                // Show an error message that the user needs to select an image first.
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content:
-                                        Text("Please select an image first."),
+                          child: Container(
+                            child: _image == null
+                                ? CircleAvatar(
+                                    radius: 60,
+                                    child: Image.asset(
+                                      "assets/logo.png",
+                                      height: 90,
+                                      fit: BoxFit.cover,
+                                    ))
+                                : Image.file(
+                                    _image!.absolute,
+                                    height: 100,
+                                    width: 100,
+                                    fit: BoxFit.cover,
                                   ),
-                                );
-                              } else if (tourcontroller.isformValide == true) {
-                                addtour();
-                                Get.back();
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        reusebletextfield(
+                            controller:
+                                tourcontroller.Tournament_Name_controller,
+                            autoValidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            keyboard: TextInputType.name,
+                            validator: (Value) {
+                              return tourcontroller.validtourname(Value!);
+                            },
+                            icon: const Icon(FontAwesomeIcons.clipboardUser),
+                            labelText: "Enter tournamanet name"),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        reusebletextfield(
+                            controller:
+                                tourcontroller.Tournament_Location_controller,
+                            autoValidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            keyboard: TextInputType.name,
+                            validator: (Value) {
+                              return tourcontroller.validtourlocation(Value!);
+                            },
+                            icon: const Icon(FontAwesomeIcons.locationDot),
+                            labelText: "Enter tournament location"),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        reusebletextfield(
+                            controller:
+                                tourcontroller.Tournament_Sport_controller,
+                            autoValidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            keyboard: TextInputType.name,
+                            validator: (Value) {
+                              return tourcontroller.validtoursport(Value!);
+                            },
+                            icon: const Icon(FontAwesomeIcons.futbol),
+                            labelText: "Enter your tournament sports"),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        reusebletextfield(
+                            controller: tourcontroller.email_controller,
+                            autoValidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            keyboard: TextInputType.emailAddress,
+                            validator: (Value) {
+                              return tourcontroller.validEmail(Value!);
+                            },
+                            icon: const Icon(FontAwesomeIcons.solidEnvelope),
+                            labelText: "Enter tournament email"),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        reusebletextfield(
+                            controller: tourcontroller.start_date_controller,
+                            autoValidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            // keyboard: TextInputType.datetime,
+                            validator: (Value) {
+                              return tourcontroller.validstartdate(Value!);
+                            },
+                            icon: const Icon(Icons.schedule),
+                            sufix: GestureDetector(
+                                onTap: () {
+                                  add_start_date();
+                                },
+                                child: const Icon(FontAwesomeIcons.calendar)),
+                            labelText: "Enter your start date"),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        reusebletextfield(
+                            controller: tourcontroller.end_date_controller,
+                            autoValidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            //keyboard: TextInputType.datetime,
+                            validator: (Value) {
+                              return tourcontroller.validenddate(Value!);
+                            },
+                            icon: const Icon(Icons.schedule),
+                            sufix: GestureDetector(
+                                onTap: () {
+                                  add_end_date();
+                                },
+                                child: const Icon(FontAwesomeIcons.calendar)),
+                            labelText: "Enter your end date"),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        reusebletextfield(
+                            controller: tourcontroller.price_controller,
+                            autoValidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            keyboard: TextInputType.number,
+                            validator: (Value) {
+                              return tourcontroller.valideprice(Value!);
+                            },
+                            icon: const Icon(Icons.attach_money),
+                            labelText: "Enter your tournament price"),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        savebutton(
+                            onTap: () {
+                              tourcontroller.checktourbottomsheet();
+                              try {
+                                if (_image == null) {
+                                  // Show an error message that the user needs to select an image first.
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content:
+                                          Text("Please select an image first."),
+                                    ),
+                                  );
+                                } else if (tourcontroller.isformValide ==
+                                    true) {
+                                  addtour();
+                                  Get.back();
+                                  Get.snackbar('Message',
+                                      'The tournament has been added',
+                                      backgroundColor: Colors.green,
+                                      colorText: Colors.white);
+                                }
+                              } catch (e) {
                                 Get.snackbar(
-                                    'Message', 'The tournament has been added',
-                                    backgroundColor: Colors.green,
+                                    'Error', 'Error while adding tournament.',
+                                    backgroundColor: Colors.red,
                                     colorText: Colors.white);
                               }
-                            } catch (e) {
-                              Get.snackbar(
-                                  'Error', 'Error while adding tournament.',
-                                  backgroundColor: Colors.red,
-                                  colorText: Colors.white);
-                            }
-                          },
-                          child: const Text("Add"))
-                    ])))
-              ]),
-            )));
+                            },
+                            child: const Text("Add"))
+                      ])))
+                ]),
+              ))),
+    );
   }
 }

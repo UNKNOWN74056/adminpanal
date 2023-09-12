@@ -41,12 +41,12 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
-  cloud_firestore: ^4.0.1
-  firebase_auth: ^4.2.1
+  cloud_firestore: ^4.9.1
+  firebase_auth: ^4.9.0
   image_picker: ^0.8.6
   firebase_storage: ^11.0.10
   flutter_rating_bar: ^4.0.1
-  get: ^4.6.5
+  get: ^4.6.6
   intl: ^0.18.0
   flutter_slidable: ^2.0.0
 

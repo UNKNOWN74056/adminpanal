@@ -113,7 +113,6 @@ class _clubdetailState extends State<clubdetail> {
 
   @override
   Widget build(BuildContext context) {
-    double rating;
     return SafeArea(
       child: Scaffold(
         floatingActionButton: FloatingActionButton.extended(

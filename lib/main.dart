@@ -8,6 +8,7 @@ Future main() async {
   await Firebase.initializeApp();
   runApp(MyApp());
 }
+
 class MyApp extends StatelessWidget {
   final Future<FirebaseApp> _initailization = Firebase.initializeApp();
 
@@ -26,9 +27,7 @@ class MyApp extends StatelessWidget {
 
         return GetMaterialApp(
             title: 'Flutter Demo',
-            theme: ThemeData(
-              primarySwatch: Colors.blueGrey,
-            ),
+            theme: ThemeData.light().copyWith(useMaterial3: true),
             debugShowCheckedModeBanner: false,
             home: const MyadimnPage());
       },
