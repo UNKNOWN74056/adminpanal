@@ -109,7 +109,7 @@ class _UsersState extends State<Users> {
                                     Get.snackbar(
                                       "Message",
                                       "The account is enabled",
-                                      backgroundColor: Colors.red,
+                                      backgroundColor: Colors.green,
                                       colorText: Colors.white,
                                     );
                                     Navigator.of(context).pop();
