@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:get/get.dart';
 import 'package:admin/GETX/getclubdata.dart';
-import 'package:admin/widgets/savebutton.dart';
+import 'package:admin/components/savebutton.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';

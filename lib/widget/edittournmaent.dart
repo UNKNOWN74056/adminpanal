@@ -7,8 +7,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import '../GETX/tournament.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:admin/widgets/savebutton.dart';
-import '../widgets/textform.dart';
+import 'package:admin/components/savebutton.dart';
+import '../components/textform.dart';
 
 class edittournament extends StatefulWidget {
   final QueryDocumentSnapshot<Object?> data;

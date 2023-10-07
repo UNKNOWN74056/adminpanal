@@ -6,8 +6,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import '../GETX/clubGetx.dart';
 import "package:get/get.dart";
-import '../widgets/savebutton.dart';
-import '../widgets/textform.dart';
+import '../components/savebutton.dart';
+import '../components/textform.dart';
 
 class editclubpage extends StatefulWidget {
   final QueryDocumentSnapshot<Object?> data;
