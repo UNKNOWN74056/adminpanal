@@ -1,5 +1,6 @@
 import 'package:admin/clubs/clubs.dart';
 import 'package:admin/tournament/turnaments.dart';
+import 'package:admin/user/user.dart';
 import 'package:admin/widget/adminapprove.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,7 +17,7 @@ class _MyadimnPageState extends State<MyadimnPage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        length: 2,
+        length: 3,
         child: SafeArea(
           child: Scaffold(
             appBar: AppBar(
@@ -25,7 +26,7 @@ class _MyadimnPageState extends State<MyadimnPage> {
               bottom: const TabBar(
                 indicatorColor: Colors.black,
                 indicatorWeight: 3,
-                tabs: [Text("Clubs"), Text("Turnaments")],
+                tabs: [Text("Users"), Text("Clubs"), Text("Turnaments")],
               ),
               actions: [
                 Padding(
@@ -38,7 +39,7 @@ class _MyadimnPageState extends State<MyadimnPage> {
                 )
               ],
             ),
-            body: const TabBarView(children: [clubs(), turnaments()]),
+            body: const TabBarView(children: [Users(), clubs(), turnaments()]),
           ),
         ));
   }
