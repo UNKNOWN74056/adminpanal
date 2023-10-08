@@ -81,8 +81,7 @@ class _UsersState extends State<Users> {
                     },
                     backgroundColor: const Color.fromARGB(255, 241, 39, 12),
                     foregroundColor: Colors.white,
-                    icon: FontAwesomeIcons.trash,
-                    label: 'Disable',
+                    icon: FontAwesomeIcons.ban,
                   ),
                   SlidableAction(
                     onPressed: (context) {
@@ -122,8 +121,7 @@ class _UsersState extends State<Users> {
                     },
                     backgroundColor: const Color.fromARGB(255, 12, 241, 27),
                     foregroundColor: Colors.white,
-                    icon: FontAwesomeIcons.ban,
-                    label: 'Enable',
+                    icon: FontAwesomeIcons.check,
                   ),
                 ]),
                 child: Card(

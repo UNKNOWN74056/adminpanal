@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:admin/clubs/Members.dart';
 import 'package:get/get.dart';
 import 'package:admin/GETX/getclubdata.dart';
 import 'package:admin/components/savebutton.dart';
@@ -207,6 +208,16 @@ class _clubdetailState extends State<clubdetail> {
                       image: NetworkImage(widget.post['Clubimage']),
                       fit: BoxFit.cover,
                     ),
+                  ),
+                ),
+                Positioned(
+                  top: 10, // Adjust the top position as needed
+                  right: 10, // Adjust the right position as needed
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Get.to(Club_Members(clubName: widget.post['Clubname']));
+                    },
+                    child: const Text("Members"),
                   ),
                 ),
                 SafeArea(
