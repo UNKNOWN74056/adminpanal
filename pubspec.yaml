@@ -48,6 +48,8 @@ dev_dependencies:
   firebase_storage: ^11.0.10
   flutter_rating_bar: ^4.0.1
   get: ^4.6.6
+  chewie: ^1.4.0
+  video_player: ^2.1.12
   intl: ^0.18.0
 
 # For information on the generic Dart part of this file, see the
