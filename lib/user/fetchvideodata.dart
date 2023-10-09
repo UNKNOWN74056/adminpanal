@@ -1,4 +1,4 @@
-import 'package:admin/tournament/videomodel.dart';
+import 'package:admin/model/videomodel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
