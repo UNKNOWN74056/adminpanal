@@ -130,12 +130,22 @@ class _UsersState extends State<Users> {
                   margin: const EdgeInsets.all(10),
                   child: ListTile(
                     onTap: () {
-                      Get.to( Detail_Page(post: user));
+                      Get.to(Detail_Page(post: user));
                     },
                     leading: CircleAvatar(
                       backgroundImage: NetworkImage(user['Imageurl']),
                     ),
-                    title: Text(user['fullname']),
+                    title: Row(
+                      children: [
+                        Text(user['fullname']),
+                        if (user['varification'])
+                          const Icon(
+                            FontAwesomeIcons.certificate,
+                            color: Colors.blue,
+                            size: 16,
+                          ),
+                      ],
+                    ),
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
