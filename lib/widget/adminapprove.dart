@@ -1,3 +1,4 @@
+import 'package:admin/widget/Deletion_Requests.dart';
 import 'package:admin/widget/registration.dart';
 import 'package:flutter/material.dart';
 
@@ -28,7 +29,7 @@ class AdminApprovalScreen extends StatelessWidget {
             // Tab 2 content
             Container(
               child: const Center(
-                child: Text('Tab 2 Content'),
+                child: Deleteion_Requests(),
               ),
             ),
           ],
