@@ -1,3 +1,5 @@
+import 'package:admin/GETX/Total_Tournmaent.dart';
+import 'package:admin/GETX/Total_Tournmaents.dart';
 import 'package:admin/admin.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,6 +9,8 @@ Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
+  Get.put(UserController()); // Initialize the UserController here.
+  Get.put(TournamentController());
 }
 
 class MyApp extends StatelessWidget {
@@ -29,7 +33,7 @@ class MyApp extends StatelessWidget {
             title: 'Flutter Demo',
             theme: ThemeData.light().copyWith(useMaterial3: true),
             debugShowCheckedModeBanner: false,
-            home: const MyadimnPage());
+            home: const MyAdminPage());
       },
     );
   }

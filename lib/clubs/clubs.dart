@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:admin/GETX/Club_Search.dart';
 import 'package:admin/GETX/clubGetx.dart';
 import 'package:admin/clubs/clubdetails.dart';
 import 'package:admin/widget/addclubdata.dart';
@@ -141,6 +142,16 @@ class _clubsState extends State<clubs> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(title: const Text("Club"), centerTitle: true, actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 20),
+            child: GestureDetector(
+                onTap: () {
+                  Get.to(const ClubSearch());
+                },
+                child: const Icon(Icons.search)),
+          ),
+        ]),
         //floating action button
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         floatingActionButton: FloatingActionButton(

@@ -1,3 +1,4 @@
+import 'package:admin/GETX/Tournament_search.dart';
 import 'package:admin/tournament/addtournament.dart';
 import 'package:admin/tournament/tournamentteam.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -20,6 +21,20 @@ class _turnamentsState extends State<turnaments> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text("Tournaments"),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 20),
+              child: GestureDetector(
+                  onTap: () {
+                    Get.to(const Tournament_search());
+                  },
+                  child: const Icon(Icons.search)),
+            ),
+          ],
+        ),
         //floating action button
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         floatingActionButton: FloatingActionButton(

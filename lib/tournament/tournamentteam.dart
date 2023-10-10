@@ -1,3 +1,4 @@
+import 'package:admin/widget/Build_Card.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -40,7 +41,9 @@ class _TournamentTeamState extends State<TournamentTeam> {
                       context: context,
                       builder: (context) {
                         return AlertDialog(
-                          title: const Text('Team Players'),
+                          title: const Text(
+                            'Team Players',
+                          ),
                           content: StreamBuilder<QuerySnapshot>(
                             stream: FirebaseFirestore.instance
                                 .collection('registrationRequests')
@@ -55,105 +58,36 @@ class _TournamentTeamState extends State<TournamentTeam> {
                               }
                               if (snapshot.hasData) {
                                 return ListView.builder(
-                                    itemCount: snapshot.data!.docs.length,
-                                    itemBuilder: (context, i) {
-                                      var data = snapshot.data!.docs[i];
-                                      return Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          const Divider(thickness: 1),
-                                          Text(
-                                            data['player1'],
-                                            style:
-                                                const TextStyle(fontSize: 20),
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          Text(
-                                            data['player2'],
-                                            style:
-                                                const TextStyle(fontSize: 20),
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          Text(
-                                            data['player3'],
-                                            style:
-                                                const TextStyle(fontSize: 20),
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          Text(
-                                            data['player4'],
-                                            style:
-                                                const TextStyle(fontSize: 20),
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          Text(
-                                            data['player5'],
-                                            style:
-                                                const TextStyle(fontSize: 20),
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          Text(
-                                            data['player6'],
-                                            style:
-                                                const TextStyle(fontSize: 20),
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          Text(
-                                            data['player7'],
-                                            style:
-                                                const TextStyle(fontSize: 20),
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          Text(
-                                            data['player8'],
-                                            style:
-                                                const TextStyle(fontSize: 20),
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          Text(
-                                            data['player9'],
-                                            style:
-                                                const TextStyle(fontSize: 20),
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          Text(
-                                            data['player10'],
-                                            style:
-                                                const TextStyle(fontSize: 20),
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          Text(
-                                            data['player11'],
-                                            style:
-                                                const TextStyle(fontSize: 20),
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                        ],
-                                      );
-                                    });
+                                  itemCount: snapshot.data!.docs.length,
+                                  itemBuilder: (context, i) {
+                                    var data = snapshot.data!.docs[i];
+                                    List<String> players = [
+                                      data['player1'],
+                                      data['player2'],
+                                      data['player3'],
+                                      data['player4'],
+                                      data['player5'],
+                                      data['player6'],
+                                      data['player7'],
+                                      data['player8'],
+                                      data['player9'],
+                                      data['player10'],
+                                      data['player11'],
+                                    ];
+
+                                    return Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const Divider(thickness: 1),
+                                        for (String player in players)
+                                          BuildCard(
+                                            player: player,
+                                          ) // Replace with player image URL
+                                      ],
+                                    );
+                                  },
+                                );
                               }
                               return const Text('No players found');
                             },

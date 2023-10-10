@@ -1,8 +1,11 @@
-import 'package:admin/user/User_Detail_Page.dart';
+import 'package:admin/GETX/Total_Tournmaent.dart';
+import 'package:admin/GETX/Total_Tournmaents.dart';
+import 'package:admin/colors/App_Colors.dart';
+import 'package:admin/user/Show_User.dart';
+import 'package:admin/widget/adminapprove.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart'; // Import the Firestore library
 
 class Users extends StatefulWidget {
@@ -13,161 +16,180 @@ class Users extends StatefulWidget {
 }
 
 class _UsersState extends State<Users> {
-  final FirebaseFirestore _firestore =
-      FirebaseFirestore.instance; // Initialize Firestore
+  final UserController userController = Get.find<UserController>();
+  final TournamentController tournamentcontroller =
+      Get.find<TournamentController>();
 
   @override
   Widget build(BuildContext context) {
-    // Create a Stream that listens to changes in the 'users' collection
-    Stream<QuerySnapshot> userStream =
-        _firestore.collection('users').snapshots();
-
     return Scaffold(
-      body: StreamBuilder(
-        stream: userStream,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          if (snapshot.hasError) {
-            return Center(child: Text("Error: ${snapshot.error}"));
-          }
-          if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return const Center(child: Text("No users found."));
-          }
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: const <Widget>[
+              UserAccountsDrawerHeader(
+                accountName: Text(
+                  "Sports",
+                  style: TextStyle(fontSize: 20),
+                ),
+                accountEmail: Text("Sports@gmail.com"),
+              ),
+              ListTile(
+                leading: Icon(Icons.lock),
+                title: Text("Change passwrod"),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.logout,
+                  color: Colors.green,
+                ),
+                title: Text("Log out"),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+            ],
+          ),
+        ),
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text("Admin panel"),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: GestureDetector(
+                onTap: () {
+                  Get.to(const AdminApprovalScreen());
+                },
+                child: const Icon(FontAwesomeIcons.bell),
+              ),
+            )
+          ],
+        ),
+        body: Center(
+          child: Column(
+            children: <Widget>[
+              StreamBuilder(
+                stream: userController.userStream,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    int count = snapshot.data!.docs.length;
+                    userController.totalUsers.value = count;
 
-          // Display the user data from the Firestore collection
-          return ListView.builder(
-            itemCount: snapshot.data!.docs.length,
-            itemBuilder: (context, index) {
-              var user = snapshot.data!.docs[index];
-              return Slidable(
-                endActionPane:
-                    ActionPane(motion: const ScrollMotion(), children: [
-                  SlidableAction(
-                    onPressed: (context) {
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: const Text("Account Disable"),
-                              content: const Text(
-                                  "Are you sure you want to disable this account?"),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text("Cancel"),
-                                ),
-                                TextButton(
-                                  onPressed: () async {
-                                    // Mark the user for deletion by updating Firestore document
-                                    await user.reference
-                                        .update({'markedForDeletion': true});
-
-                                    Get.snackbar(
-                                      "Message",
-                                      "The account is disabled",
-                                      backgroundColor: Colors.red,
-                                      colorText: Colors.white,
-                                    );
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text("Yes"),
-                                ),
-                              ],
-                            );
-                          });
-                    },
-                    backgroundColor: const Color.fromARGB(255, 241, 39, 12),
-                    foregroundColor: Colors.white,
-                    icon: FontAwesomeIcons.ban,
-                  ),
-                  SlidableAction(
-                    onPressed: (context) {
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: const Text("Account Enable"),
-                              content: const Text(
-                                  "Are you sure you want to enable this account?"),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text("Cancel"),
-                                ),
-                                TextButton(
-                                  onPressed: () async {
-                                    // Mark the user for deletion by updating Firestore document
-                                    await user.reference
-                                        .update({'markedForDeletion': false});
-
-                                    Get.snackbar(
-                                      "Message",
-                                      "The account is enabled",
-                                      backgroundColor: Colors.green,
-                                      colorText: Colors.white,
-                                    );
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text("Yes"),
-                                ),
-                              ],
-                            );
-                          });
-                    },
-                    backgroundColor: const Color.fromARGB(255, 12, 241, 27),
-                    foregroundColor: Colors.white,
-                    icon: FontAwesomeIcons.check,
-                  ),
-                ]),
-                child: Card(
-                  elevation: 3, // Add shadow to the card
-                  margin: const EdgeInsets.all(10),
-                  child: ListTile(
-                    onTap: () {
-                      Get.to(Detail_Page(post: user));
-                    },
-                    leading: CircleAvatar(
-                      backgroundImage: NetworkImage(user['Imageurl']),
-                    ),
-                    title: Row(
-                      children: [
-                        Text(user['fullname']),
-                        if (user['varification'])
-                          const Icon(
-                            FontAwesomeIcons.certificate,
-                            color: Colors.blue,
-                            size: 16,
-                          ),
-                      ],
-                    ),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(user['profession']),
-                        Row(
-                          children: <Widget>[
-                            const Icon(
-                              Icons.star,
-                              color: Colors.yellow,
-                            ),
-                            Text(user['rating'].toString()),
-                          ],
+                    return GestureDetector(
+                      onTap: () {
+                        Get.to(const Show_User());
+                      },
+                      child: Container(
+                        height: 130,
+                        width: 300,
+                        decoration: BoxDecoration(
+                          color: AppColors.backgroundColor,
+                          borderRadius:
+                              BorderRadius.circular(20), // Rounded corners
                         ),
-                      ],
-                    ),
+                        child: Obx(() => Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  const Icon(
+                                    Icons.person,
+                                    size: 50,
+                                    color: AppColors.successColor,
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Text(
+                                    "Total users: ${userController.totalUsers.value}",
+                                    style: const TextStyle(fontSize: 20),
+                                  ),
+                                ],
+                              ),
+                            )),
+                      ),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Text("Error: ${snapshot.error}");
+                  } else {
+                    return const CircularProgressIndicator(); // Loading indicator while data is being fetched.
+                  }
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              StreamBuilder(
+                stream: tournamentcontroller.tournamentStream,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    int count = snapshot.data!.docs.length;
+                    tournamentcontroller.totalTournaments.value = count;
+
+                    return Container(
+                      width: 300,
+                      height: 130,
+                      decoration: BoxDecoration(
+                        color: AppColors.backgroundColor,
+                        borderRadius:
+                            BorderRadius.circular(20), // Rounded corners
+                      ),
+                      child: Obx(() => Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                const Icon(
+                                  Icons.sports_soccer,
+                                  size: 50,
+                                  color: Color.fromARGB(255, 255, 64, 198),
+                                ),
+                                const SizedBox(width: 10),
+                                Text(
+                                  "Total tournaments: ${tournamentcontroller.totalTournaments.value}",
+                                  style: const TextStyle(fontSize: 20),
+                                ),
+                              ],
+                            ),
+                          )),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Text("Error: ${snapshot.error}");
+                  } else {
+                    return const CircularProgressIndicator(); // Loading indicator while data is being fetched.
+                  }
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Container(
+                height: 130,
+                width: 300,
+                decoration: BoxDecoration(
+                  color: AppColors.backgroundColor,
+                  borderRadius: BorderRadius.circular(20), // Rounded corners
+                ),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      const Icon(
+                        Icons.attach_money,
+                        size: 50,
+                        color: AppColors.successColor,
+                      ),
+                      const SizedBox(width: 10),
+                      Text(
+                        "Total Transaction: ${tournamentcontroller.totalTournaments.value}",
+                        style: const TextStyle(fontSize: 20),
+                      ),
+                    ],
                   ),
                 ),
-              );
-            },
-          );
-        },
-      ),
-    );
+              ),
+            ],
+          ),
+        ));
   }
 }

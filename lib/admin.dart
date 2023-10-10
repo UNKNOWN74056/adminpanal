@@ -1,46 +1,58 @@
 import 'package:admin/clubs/clubs.dart';
 import 'package:admin/tournament/turnaments.dart';
 import 'package:admin/user/user.dart';
-import 'package:admin/widget/adminapprove.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class MyadimnPage extends StatefulWidget {
-  const MyadimnPage({super.key});
+import 'package:flutter/material.dart';
+
+class MyAdminPage extends StatefulWidget {
+  const MyAdminPage({
+    super.key,
+  });
 
   @override
-  State<MyadimnPage> createState() => _MyadimnPageState();
+  State<MyAdminPage> createState() => _MyAdminPageState();
 }
 
-class _MyadimnPageState extends State<MyadimnPage> {
+class _MyAdminPageState extends State<MyAdminPage> {
+  int _selectedIndex = 0;
+
+  final List<Widget> _widgetOptions = <Widget>[
+    const Users(),
+    const clubs(),
+    const turnaments()
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-        length: 3,
-        child: SafeArea(
-          child: Scaffold(
-            appBar: AppBar(
-              centerTitle: true,
-              title: const Text("Admin panel"),
-              bottom: const TabBar(
-                indicatorColor: Colors.black,
-                indicatorWeight: 3,
-                tabs: [Text("Users"), Text("Clubs"), Text("Turnaments")],
-              ),
-              actions: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: GestureDetector(
-                      onTap: () {
-                        Get.to(AdminApprovalScreen());
-                      },
-                      child: const Icon(FontAwesomeIcons.bell)),
-                )
-              ],
-            ),
-            body: const TabBarView(children: [Users(), clubs(), turnaments()]),
+    return Scaffold(
+      body: _widgetOptions[_selectedIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Colors.green, // Set selected item color to green
+        unselectedItemColor: Colors.black,
+        currentIndex: _selectedIndex,
+
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
           ),
-        ));
+          BottomNavigationBarItem(
+            icon: Icon(Icons.sports_soccer),
+            label: 'Clubs',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.sports_baseball),
+            label: 'Tournaments',
+          ),
+        ],
+        onTap: _onItemTapped,
+      ),
+    );
   }
 }
