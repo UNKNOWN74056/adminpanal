@@ -1,7 +1,7 @@
 import 'package:admin/GETX/Total_Tournmaent.dart';
 import 'package:admin/GETX/Total_Tournmaents.dart';
 import 'package:admin/GETX/Total_Transection.dart';
-import 'package:admin/admin.dart';
+import 'package:admin/utils/colors/Splash_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
             title: 'Flutter Demo',
             theme: ThemeData.light().copyWith(useMaterial3: true),
             debugShowCheckedModeBanner: false,
-            home: const MyAdminPage());
+            home: const splashscreen());
       },
     );
   }

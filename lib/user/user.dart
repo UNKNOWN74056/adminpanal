@@ -1,11 +1,13 @@
 import 'package:admin/GETX/Total_Tournmaent.dart';
 import 'package:admin/GETX/Total_Tournmaents.dart';
 import 'package:admin/GETX/Total_Transection.dart';
-import 'package:admin/colors/App_Colors.dart';
+import 'package:admin/utils/colors/App_Colors.dart';
 import 'package:admin/user/Show_User.dart';
+import 'package:admin/view/Login_page.dart';
 import 'package:admin/widget/adminapprove.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart'; // Import the Firestore library
 
@@ -37,29 +39,34 @@ class _UsersState extends State<Users> {
         drawer: Drawer(
           child: ListView(
             padding: EdgeInsets.zero,
-            children: const <Widget>[
-              UserAccountsDrawerHeader(
+            children: <Widget>[
+              const UserAccountsDrawerHeader(
                 accountName: Text(
                   "Sports",
                   style: TextStyle(fontSize: 20),
                 ),
                 accountEmail: Text("Sports@gmail.com"),
               ),
-              ListTile(
+              const ListTile(
                 leading: Icon(Icons.lock),
                 title: Text("Change passwrod"),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              ListTile(
-                leading: Icon(
-                  Icons.logout,
-                  color: Colors.green,
-                ),
-                title: Text("Log out"),
+              GestureDetector(
+                onTap: () async {
+                  await FirebaseAuth.instance.signOut();
+                  Get.to(const Login_page());
+                },
+                child: const ListTile(
+                    leading: Icon(
+                      Icons.logout,
+                      color: Colors.green,
+                    ),
+                    title: Text("Log out")),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
             ],

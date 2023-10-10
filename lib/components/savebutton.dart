@@ -1,3 +1,4 @@
+import 'package:admin/utils/colors/App_Colors.dart';
 import 'package:flutter/material.dart';
 
 class savebutton extends StatelessWidget {
@@ -14,7 +15,7 @@ class savebutton extends StatelessWidget {
         padding: const EdgeInsets.all(20),
         margin: const EdgeInsets.symmetric(horizontal: 70),
         decoration: BoxDecoration(
-            color: Colors.blueGrey, borderRadius: BorderRadius.circular(8)),
+            color: AppColors.black, borderRadius: BorderRadius.circular(8)),
         child: Center(
           child: Center(
             child: DefaultTextStyle.merge(

@@ -8,5 +8,7 @@ class AppColors {
   static const Color textColor = Color(0xFF333333);
   static const Color errorColor = Color(0xFFD32F2F);
   static const Color successColor = Color(0xFF4CAF50);
+  static const Color black = Color.fromARGB(255, 2, 12, 2);
+
   // Add more color constants as needed
 }
