@@ -1,5 +1,6 @@
 import 'package:admin/GETX/Total_Tournmaent.dart';
 import 'package:admin/GETX/Total_Tournmaents.dart';
+import 'package:admin/GETX/Total_Transection.dart';
 import 'package:admin/colors/App_Colors.dart';
 import 'package:admin/user/Show_User.dart';
 import 'package:admin/widget/adminapprove.dart';
@@ -9,16 +10,26 @@ import 'package:get/get.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart'; // Import the Firestore library
 
 class Users extends StatefulWidget {
-  const Users({Key? key}) : super(key: key);
+  const Users({super.key});
 
   @override
   State<Users> createState() => _UsersState();
 }
 
 class _UsersState extends State<Users> {
+  final totalTransactionController = Get.put(Total_Transection());
+
   final UserController userController = Get.find<UserController>();
+
   final TournamentController tournamentcontroller =
       Get.find<TournamentController>();
+  @override
+  void initState() {
+    super.initState();
+    totalTransactionController
+        .fetchRegistrationRequests(); // Call the data-fetching function here
+    totalTransactionController.calculateTotalFee();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -163,31 +174,43 @@ class _UsersState extends State<Users> {
               const SizedBox(
                 height: 20,
               ),
-              Container(
-                height: 130,
-                width: 300,
-                decoration: BoxDecoration(
-                  color: AppColors.backgroundColor,
-                  borderRadius: BorderRadius.circular(20), // Rounded corners
-                ),
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      const Icon(
-                        Icons.attach_money,
-                        size: 50,
-                        color: AppColors.successColor,
+              FutureBuilder<int>(
+                future: totalTransactionController.calculateTotalFee(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator(); // Loading indicator while data is being fetched.
+                  } else if (snapshot.hasError) {
+                    return Text("Error: ${snapshot.error}");
+                  } else {
+                    final totalTransactionFee = snapshot.data ?? 0.0;
+                    return Container(
+                      height: 130,
+                      width: 300,
+                      decoration: BoxDecoration(
+                        color: AppColors.backgroundColor,
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                      const SizedBox(width: 10),
-                      Text(
-                        "Total Transaction: ${tournamentcontroller.totalTournaments.value}",
-                        style: const TextStyle(fontSize: 20),
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            const Icon(
+                              Icons.attach_money,
+                              size: 50,
+                              color: AppColors.successColor,
+                            ),
+                            const SizedBox(width: 10),
+                            Text(
+                              "Total Transaction: $totalTransactionFee",
+                              style: const TextStyle(fontSize: 20),
+                            ),
+                          ],
+                        ),
                       ),
-                    ],
-                  ),
-                ),
-              ),
+                    );
+                  }
+                },
+              )
             ],
           ),
         ));

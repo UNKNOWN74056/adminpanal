@@ -242,7 +242,7 @@ class _turnamentsState extends State<turnaments> {
                                             ),
                                             const SizedBox(width: 5),
                                             Text(
-                                              data['price'],
+                                              data['price'].toString(),
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 16,

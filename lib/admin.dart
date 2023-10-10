@@ -17,7 +17,7 @@ class _MyAdminPageState extends State<MyAdminPage> {
   int _selectedIndex = 0;
 
   final List<Widget> _widgetOptions = <Widget>[
-    const Users(),
+    Users(),
     const clubs(),
     const turnaments()
   ];

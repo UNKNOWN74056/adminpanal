@@ -9,6 +9,7 @@ class tournamentgetx extends GetxController {
   var end_date = "".obs;
   var price = "".obs;
   var email = "".obs;
+  int fee = 0;
   bool isformValide = false;
 
   late TextEditingController Tournament_Name_controller,
@@ -17,7 +18,8 @@ class tournamentgetx extends GetxController {
       start_date_controller,
       end_date_controller,
       price_controller,
-      email_controller;
+      email_controller,
+      fee_controller;
 
   @override
   void onInit() {
@@ -30,6 +32,7 @@ class tournamentgetx extends GetxController {
     end_date_controller = TextEditingController();
     price_controller = TextEditingController();
     email_controller = TextEditingController();
+    fee_controller = TextEditingController();
   }
 
   final tourkeyForm = GlobalKey<FormState>();
@@ -124,6 +127,7 @@ class tournamentgetx extends GetxController {
       end_date.value = end_date_controller.value.text;
       price.value = price_controller.value.text;
       email.value = email_controller.value.text;
+       fee = int.tryParse(fee_controller.value.text) ?? 0;
       isformValide = true;
       // User those values to send our auth request ...
     }
@@ -138,6 +142,7 @@ class tournamentgetx extends GetxController {
     end_date_controller.dispose();
     price_controller.dispose();
     email_controller.dispose();
+    fee_controller.dispose();
     super.dispose();
   }
 }

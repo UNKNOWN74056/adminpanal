@@ -1,3 +1,4 @@
+import 'package:admin/colors/App_Colors.dart';
 import "package:flutter/material.dart";
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import "package:get/get.dart";
@@ -30,6 +31,7 @@ class _tournamentadditionState extends State<tournamentaddition> {
     DateTime enddate,
     String price,
     String email,
+    String fee,
   ) async {
     await FirebaseFirestore.instance
         .collection('tournaments')
@@ -41,8 +43,9 @@ class _tournamentadditionState extends State<tournamentaddition> {
       'tournamentimage': tournamentimage,
       'startdate': Timestamp.fromDate(startdate), // Convert to Timestamp
       'enddate': Timestamp.fromDate(enddate),
-      'price': tourcontroller.price.value,
+      'price': int.tryParse(price) ?? 0,
       'email': tourcontroller.email.value,
+      'fee': int.tryParse(fee) ?? 0,
     });
   }
 
@@ -57,6 +60,7 @@ class _tournamentadditionState extends State<tournamentaddition> {
       tourcontroller.end_date_controller.text = "";
       tourcontroller.email_controller.text = "";
       tourcontroller.price_controller.text = "";
+      tourcontroller.fee_controller.text = "";
     });
   }
 
@@ -117,6 +121,7 @@ class _tournamentadditionState extends State<tournamentaddition> {
       endDate,
       tourcontroller.price_controller.value.text,
       tourcontroller.email_controller.value.text,
+      tourcontroller.fee_controller.value.text,
     );
   }
 
@@ -239,7 +244,10 @@ class _tournamentadditionState extends State<tournamentaddition> {
                             validator: (Value) {
                               return tourcontroller.validtourname(Value!);
                             },
-                            icon: const Icon(FontAwesomeIcons.clipboardUser),
+                            icon: const Icon(
+                              FontAwesomeIcons.clipboardUser,
+                              color: AppColors.secondaryColor,
+                            ),
                             labelText: "Enter tournamanet name"),
                         const SizedBox(
                           height: 5,
@@ -253,7 +261,8 @@ class _tournamentadditionState extends State<tournamentaddition> {
                             validator: (Value) {
                               return tourcontroller.validtourlocation(Value!);
                             },
-                            icon: const Icon(FontAwesomeIcons.locationDot),
+                            icon: const Icon(FontAwesomeIcons.locationDot,
+                                color: AppColors.errorColor),
                             labelText: "Enter tournament location"),
                         const SizedBox(
                           height: 5,
@@ -267,7 +276,8 @@ class _tournamentadditionState extends State<tournamentaddition> {
                             validator: (Value) {
                               return tourcontroller.validtoursport(Value!);
                             },
-                            icon: const Icon(FontAwesomeIcons.futbol),
+                            icon: const Icon(FontAwesomeIcons.futbol,
+                                color: AppColors.primaryColor),
                             labelText: "Enter your tournament sports"),
                         const SizedBox(
                           height: 5,
@@ -280,7 +290,8 @@ class _tournamentadditionState extends State<tournamentaddition> {
                             validator: (Value) {
                               return tourcontroller.validEmail(Value!);
                             },
-                            icon: const Icon(FontAwesomeIcons.solidEnvelope),
+                            icon: const Icon(FontAwesomeIcons.solidEnvelope,
+                                color: AppColors.successColor),
                             labelText: "Enter tournament email"),
                         const SizedBox(
                           height: 5,
@@ -293,12 +304,14 @@ class _tournamentadditionState extends State<tournamentaddition> {
                             validator: (Value) {
                               return tourcontroller.validstartdate(Value!);
                             },
-                            icon: const Icon(Icons.schedule),
+                            icon: const Icon(Icons.schedule,
+                                color: AppColors.successColor),
                             sufix: GestureDetector(
                                 onTap: () {
                                   add_start_date();
                                 },
-                                child: const Icon(FontAwesomeIcons.calendar)),
+                                child: const Icon(FontAwesomeIcons.calendar,
+                                    color: AppColors.successColor)),
                             labelText: "Enter your start date"),
                         const SizedBox(
                           height: 5,
@@ -311,12 +324,14 @@ class _tournamentadditionState extends State<tournamentaddition> {
                             validator: (Value) {
                               return tourcontroller.validenddate(Value!);
                             },
-                            icon: const Icon(Icons.schedule),
+                            icon: const Icon(Icons.schedule,
+                                color: AppColors.errorColor),
                             sufix: GestureDetector(
                                 onTap: () {
                                   add_end_date();
                                 },
-                                child: const Icon(FontAwesomeIcons.calendar)),
+                                child: const Icon(FontAwesomeIcons.calendar,
+                                    color: AppColors.errorColor)),
                             labelText: "Enter your end date"),
                         const SizedBox(
                           height: 5,
@@ -329,8 +344,25 @@ class _tournamentadditionState extends State<tournamentaddition> {
                             validator: (Value) {
                               return tourcontroller.valideprice(Value!);
                             },
-                            icon: const Icon(Icons.attach_money),
+                            icon: const Icon(Icons.attach_money,
+                                color: AppColors.successColor),
                             labelText: "Enter your tournament price"),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        reusebletextfield(
+                            controller: tourcontroller.fee_controller,
+                            autoValidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            keyboard: TextInputType.number,
+                            validator: (Value) {
+                              return tourcontroller.valideprice(Value!);
+                            },
+                            icon: const Icon(
+                              Icons.attach_money,
+                              color: AppColors.successColor,
+                            ),
+                            labelText: "Enter Registration fee"),
                         const SizedBox(
                           height: 5,
                         ),
