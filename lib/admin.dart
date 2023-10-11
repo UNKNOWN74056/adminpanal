@@ -5,9 +5,7 @@ import 'package:admin/user/user.dart';
 import 'package:flutter/material.dart';
 
 class MyAdminPage extends StatefulWidget {
-  const MyAdminPage({
-    super.key,
-  });
+  const MyAdminPage({super.key});
 
   @override
   State<MyAdminPage> createState() => _MyAdminPageState();

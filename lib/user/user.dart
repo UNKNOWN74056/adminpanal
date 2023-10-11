@@ -1,11 +1,9 @@
-import 'package:admin/GETX/Total_Tournmaent.dart';
-import 'package:admin/GETX/Total_Tournmaents.dart';
 import 'package:admin/GETX/Total_Transection.dart';
 import 'package:admin/GETX/admin._data.dart';
 import 'package:admin/components/savebutton.dart';
 import 'package:admin/components/textform.dart';
-import 'package:admin/utils/colors/App_Colors.dart';
 import 'package:admin/user/Show_User.dart';
+import 'package:admin/utils/colors/App_Colors.dart';
 import 'package:admin/view/Login_page.dart';
 import 'package:admin/widget/adminapprove.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -36,20 +34,9 @@ class _UsersState extends State<Users> {
         .update({'password': changepassword.text});
   }
 
-  final totalTransactionController = Get.put(Total_Transection());
+  final totalTransactionController = Get.put(TotalTransactionController());
 
-  final UserController userController = Get.find<UserController>();
   final adminController = Get.put(AdminController());
-
-  final TournamentController tournamentcontroller =
-      Get.find<TournamentController>();
-  @override
-  void initState() {
-    super.initState();
-    totalTransactionController
-        .fetchRegistrationRequests(); // Call the data-fetching function here
-    totalTransactionController.calculateTotalFee();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -122,10 +109,13 @@ class _UsersState extends State<Users> {
                                         onTap: () {
                                           if (changepasswordkey.currentState!
                                               .validate()) {
-                                            change_password();
-                                            Get.back();
-                                            Get.snackbar("Meassage",
-                                                "Your password is changed");
+                                            Future.delayed(
+                                                const Duration(seconds: 3), () {
+                                              change_password();
+                                              Get.back();
+                                              Get.snackbar("Meassage",
+                                                  "Your password is changed");
+                                            });
                                           }
                                         },
                                         child: const Text("Change password"))
@@ -172,63 +162,36 @@ class _UsersState extends State<Users> {
         ),
         body: Center(
           child: Column(
-            children: <Widget>[
+            children: [
               StreamBuilder(
-                stream: userController.userStream,
+                stream:
+                    FirebaseFirestore.instance.collection('users').snapshots(),
                 builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    int count = snapshot.data!.docs.length;
-                    userController.totalUsers.value = count;
-
-                    return GestureDetector(
-                      onTap: () {
-                        Get.to(const Show_User());
-                      },
-                      child: Container(
-                        height: 130,
-                        width: 300,
-                        decoration: BoxDecoration(
-                          color: AppColors.backgroundColor,
-                          borderRadius:
-                              BorderRadius.circular(20), // Rounded corners
-                        ),
-                        child: Obx(() => Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  const Icon(
-                                    Icons.person,
-                                    size: 50,
-                                    color: AppColors.successColor,
-                                  ),
-                                  const SizedBox(width: 10),
-                                  Text(
-                                    "Total users: ${userController.totalUsers.value}",
-                                    style: const TextStyle(fontSize: 20),
-                                  ),
-                                ],
-                              ),
-                            )),
-                      ),
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: Text('Error: ${snapshot.error}'),
                     );
-                  } else if (snapshot.hasError) {
-                    return Text("Error: ${snapshot.error}");
-                  } else {
-                    return const CircularProgressIndicator(); // Loading indicator while data is being fetched.
                   }
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              StreamBuilder(
-                stream: tournamentcontroller.tournamentStream,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    int count = snapshot.data!.docs.length;
-                    tournamentcontroller.totalTournaments.value = count;
 
-                    return Container(
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+
+                  if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                    return const Center(
+                      child: Text('No users found.'),
+                    );
+                  }
+
+                  final userCount = snapshot.data!.docs.length;
+
+                  return GestureDetector(
+                    onTap: () {
+                      Get.to(const Show_User());
+                    },
+                    child: Container(
                       width: 300,
                       height: 130,
                       decoration: BoxDecoration(
@@ -236,48 +199,44 @@ class _UsersState extends State<Users> {
                         borderRadius:
                             BorderRadius.circular(20), // Rounded corners
                       ),
-                      child: Obx(() => Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                const Icon(
-                                  Icons.sports_soccer,
-                                  size: 50,
-                                  color: Color.fromARGB(255, 255, 64, 198),
-                                ),
-                                const SizedBox(width: 10),
-                                Text(
-                                  "Total tournaments: ${tournamentcontroller.totalTournaments.value}",
-                                  style: const TextStyle(fontSize: 20),
-                                ),
-                              ],
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            const Icon(
+                              Icons.person,
+                              size: 50,
+                              color: AppColors.successColor,
                             ),
-                          )),
-                    );
-                  } else if (snapshot.hasError) {
-                    return Text("Error: ${snapshot.error}");
-                  } else {
-                    return const CircularProgressIndicator(); // Loading indicator while data is being fetched.
-                  }
+                            const SizedBox(width: 10),
+                            Text(
+                              "Total users: $userCount",
+                              style: const TextStyle(fontSize: 20),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
                 },
               ),
               const SizedBox(
                 height: 20,
               ),
-              FutureBuilder<int>(
-                future: totalTransactionController.calculateTotalFee(),
+              StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection('tournaments')
+                    .snapshots(),
                 builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator(); // Loading indicator while data is being fetched.
-                  } else if (snapshot.hasError) {
-                    return Text("Error: ${snapshot.error}");
-                  } else {
-                    final totalTransactionFee = snapshot.data ?? 0.0;
+                  if (snapshot.hasData) {
+                    int count = snapshot.data!.docs.length;
+
                     return Container(
-                      height: 130,
                       width: 300,
+                      height: 130,
                       decoration: BoxDecoration(
-                        color: AppColors.backgroundColor,
+                        color: AppColors
+                            .backgroundColor, // Replace with your desired color
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Center(
@@ -285,22 +244,30 @@ class _UsersState extends State<Users> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             const Icon(
-                              Icons.attach_money,
+                              Icons.sports_soccer,
                               size: 50,
-                              color: AppColors.successColor,
+                              color: Color.fromARGB(255, 255, 64, 198),
                             ),
                             const SizedBox(width: 10),
                             Text(
-                              "Total Transaction: $totalTransactionFee",
+                              "Total tournaments: $count",
                               style: const TextStyle(fontSize: 20),
                             ),
                           ],
                         ),
                       ),
                     );
+                  } else if (snapshot.hasError) {
+                    return Text("Error: ${snapshot.error}");
+                  } else {
+                    return const CircularProgressIndicator();
                   }
                 },
-              )
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TotalTransactionController().getTotalTransactionStreamBuilder(),
             ],
           ),
         ));

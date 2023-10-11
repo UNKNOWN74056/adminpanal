@@ -1,6 +1,3 @@
-import 'package:admin/GETX/Total_Tournmaent.dart';
-import 'package:admin/GETX/Total_Tournmaents.dart';
-import 'package:admin/GETX/Total_Transection.dart';
 import 'package:admin/utils/colors/Splash_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,9 +7,6 @@ Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
-  Get.put(UserController()); // Initialize the UserController here.
-  Get.put(TournamentController());
-  Get.put(Total_Transection());
 }
 
 class MyApp extends StatelessWidget {
