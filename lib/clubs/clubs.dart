@@ -142,16 +142,20 @@ class _clubsState extends State<clubs> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(title: const Text("Club"), centerTitle: true, actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 20),
-            child: GestureDetector(
-                onTap: () {
-                  Get.to(const ClubSearch());
-                },
-                child: const Icon(Icons.search)),
-          ),
-        ]),
+        appBar: AppBar(
+            automaticallyImplyLeading: false,
+            title: const Text("Club"),
+            centerTitle: true,
+            actions: [
+              Padding(
+                padding: const EdgeInsets.only(right: 20),
+                child: GestureDetector(
+                    onTap: () {
+                      Get.to(const ClubSearch());
+                    },
+                    child: const Icon(Icons.search)),
+              ),
+            ]),
         //floating action button
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         floatingActionButton: FloatingActionButton(

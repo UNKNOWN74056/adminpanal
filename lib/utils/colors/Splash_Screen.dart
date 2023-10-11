@@ -2,9 +2,6 @@ import 'package:admin/utils/colors/Splah_Screen_Service.dart';
 import 'package:flutter/material.dart';
 
 class splashscreen extends StatefulWidget {
-  //route name
-  static const String routname = 'splash_screen';
-
   const splashscreen({super.key});
 
   @override

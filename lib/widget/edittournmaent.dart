@@ -290,48 +290,51 @@ class _edittournamentState extends State<edittournament> {
                       height: 5,
                     ),
                     reusebletextfield(
-                        controller: _updatetourstartdate,
-                        autoValidateMode: AutovalidateMode.onUserInteraction,
-                        // keyboard: TextInputType.datetime,
-                        validator: (Value) {
-                          return tourcontroller.validstartdate(Value!);
-                        },
-                        icon: const Icon(Icons.schedule),
-                        sufix: GestureDetector(
-                            onTap: () {
-                              add_start_date();
-                            },
-                            child: const Icon(FontAwesomeIcons.calendar)),
-                        labelText: "Enter your start date"),
+                      controller: _updatetourstartdate,
+                      autoValidateMode: AutovalidateMode.onUserInteraction,
+                      // keyboard: TextInputType.datetime,
+                      validator: (Value) {
+                        return tourcontroller.validstartdate(Value!);
+                      },
+                      icon: const Icon(Icons.schedule),
+                      ontap: GestureDetector(
+                          onTap: () {
+                            add_start_date();
+                          },
+                          child: const Icon(FontAwesomeIcons.calendar)),
+                      labelText: "Enter your start date", keyboard: null,
+                    ),
                     const SizedBox(
                       height: 5,
                     ),
                     reusebletextfield(
-                        controller: _updatetourenddate,
-                        autoValidateMode: AutovalidateMode.onUserInteraction,
-                        //keyboard: TextInputType.datetime,
-                        validator: (Value) {
-                          return tourcontroller.validenddate(Value!);
-                        },
-                        icon: const Icon(Icons.schedule),
-                        sufix: GestureDetector(
-                            onTap: () {
-                              add_end_date();
-                            },
-                            child: const Icon(FontAwesomeIcons.calendar)),
-                        labelText: "Enter your end date"),
+                      controller: _updatetourenddate,
+                      autoValidateMode: AutovalidateMode.onUserInteraction,
+                      //keyboard: TextInputType.datetime,
+                      validator: (Value) {
+                        return tourcontroller.validenddate(Value!);
+                      },
+                      icon: const Icon(Icons.schedule),
+                      ontap: GestureDetector(
+                          onTap: () {
+                            add_end_date();
+                          },
+                          child: const Icon(FontAwesomeIcons.calendar)),
+                      labelText: "Enter your end date", keyboard: null,
+                    ),
                     const SizedBox(
                       height: 5,
                     ),
                     reusebletextfield(
-                        controller: _updatetourprice,
-                        autoValidateMode: AutovalidateMode.onUserInteraction,
-                        keyboard: TextInputType.number,
-                        validator: (Value) {
-                          return tourcontroller.valideprice(Value!);
-                        },
-                        icon: const Icon(Icons.attach_money),
-                        labelText: "Enter your tournament price"),
+                      controller: _updatetourprice,
+                      autoValidateMode: AutovalidateMode.onUserInteraction,
+                      keyboard: TextInputType.number,
+                      validator: (Value) {
+                        return tourcontroller.valideprice(Value!);
+                      },
+                      icon: const Icon(Icons.attach_money),
+                      labelText: "Enter your tournament price",
+                    ),
                     const SizedBox(
                       height: 5,
                     ),

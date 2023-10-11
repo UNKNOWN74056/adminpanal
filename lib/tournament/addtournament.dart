@@ -297,42 +297,42 @@ class _tournamentadditionState extends State<tournamentaddition> {
                           height: 5,
                         ),
                         reusebletextfield(
-                            controller: tourcontroller.start_date_controller,
-                            autoValidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            // keyboard: TextInputType.datetime,
-                            validator: (Value) {
-                              return tourcontroller.validstartdate(Value!);
-                            },
-                            icon: const Icon(Icons.schedule,
-                                color: AppColors.successColor),
-                            sufix: GestureDetector(
-                                onTap: () {
-                                  add_start_date();
-                                },
-                                child: const Icon(FontAwesomeIcons.calendar,
-                                    color: AppColors.successColor)),
-                            labelText: "Enter your start date"),
+                          controller: tourcontroller.start_date_controller,
+                          autoValidateMode: AutovalidateMode.onUserInteraction,
+                          // keyboard: TextInputType.datetime,
+                          validator: (Value) {
+                            return tourcontroller.validstartdate(Value!);
+                          },
+                          icon: const Icon(Icons.schedule,
+                              color: AppColors.successColor),
+                          ontap: GestureDetector(
+                              onTap: () {
+                                add_start_date();
+                              },
+                              child: const Icon(FontAwesomeIcons.calendar,
+                                  color: AppColors.successColor)),
+                          labelText: "Enter your start date", keyboard: null,
+                        ),
                         const SizedBox(
                           height: 5,
                         ),
                         reusebletextfield(
-                            controller: tourcontroller.end_date_controller,
-                            autoValidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            //keyboard: TextInputType.datetime,
-                            validator: (Value) {
-                              return tourcontroller.validenddate(Value!);
-                            },
-                            icon: const Icon(Icons.schedule,
-                                color: AppColors.errorColor),
-                            sufix: GestureDetector(
-                                onTap: () {
-                                  add_end_date();
-                                },
-                                child: const Icon(FontAwesomeIcons.calendar,
-                                    color: AppColors.errorColor)),
-                            labelText: "Enter your end date"),
+                          controller: tourcontroller.end_date_controller,
+                          autoValidateMode: AutovalidateMode.onUserInteraction,
+                          //keyboard: TextInputType.datetime,
+                          validator: (Value) {
+                            return tourcontroller.validenddate(Value!);
+                          },
+                          icon: const Icon(Icons.schedule,
+                              color: AppColors.errorColor),
+                          ontap: GestureDetector(
+                              onTap: () {
+                                add_end_date();
+                              },
+                              child: const Icon(FontAwesomeIcons.calendar,
+                                  color: AppColors.errorColor)),
+                          labelText: "Enter your end date", keyboard: null,
+                        ),
                         const SizedBox(
                           height: 5,
                         ),

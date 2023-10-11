@@ -10,22 +10,12 @@ class splashservice {
     final auth = FirebaseAuth.instance;
     final user = auth.currentUser;
     if (user != null) {
-      loginischeck();
+      Get.to(const MyAdminPage());
     } else {
       Timer(
           const Duration(seconds: 2),
           () => Navigator.push(context,
-              MaterialPageRoute(builder: ((context) => const MyAdminPage()))));
-    }
-  }
-
-  loginischeck() {
-    final currentuser = FirebaseAuth.instance.currentUser!.email;
-    final user = currentuser;
-    if (user == null) {
-      // User is not logged in, navigate to the login screen
-      Get.to(const Login_page());
-      return;
+              MaterialPageRoute(builder: ((context) => const Login_page()))));
     }
   }
 }

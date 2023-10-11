@@ -22,6 +22,7 @@ class _turnamentsState extends State<turnaments> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           centerTitle: true,
           title: const Text("Tournaments"),
           actions: [
