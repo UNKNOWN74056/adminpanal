@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:admin/utils/colors/App_Colors.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import "package:flutter/material.dart";
@@ -195,7 +196,10 @@ class _clubadditionState extends State<clubaddition> {
                         validator: (Value) {
                           return Controller.validclubname(Value!);
                         },
-                        icon: const Icon(FontAwesomeIcons.clipboardUser),
+                        icon: const Icon(
+                          FontAwesomeIcons.clipboardUser,
+                          color: AppColors.primaryColor,
+                        ),
                         labelText: "Enter club name"),
                     const SizedBox(
                       height: 5,
@@ -207,7 +211,10 @@ class _clubadditionState extends State<clubaddition> {
                         validator: (Value) {
                           return Controller.validEmail(Value!);
                         },
-                        icon: const Icon(FontAwesomeIcons.solidEnvelope),
+                        icon: const Icon(
+                          FontAwesomeIcons.solidEnvelope,
+                          color: AppColors.errorColor,
+                        ),
                         labelText: "Enter email"),
                     const SizedBox(
                       height: 5,
@@ -219,7 +226,10 @@ class _clubadditionState extends State<clubaddition> {
                         validator: (Value) {
                           return Controller.validlocation(Value!);
                         },
-                        icon: const Icon(FontAwesomeIcons.locationDot),
+                        icon: const Icon(
+                          FontAwesomeIcons.locationDot,
+                          color: AppColors.successColor,
+                        ),
                         labelText: "Enter location"),
                     const SizedBox(
                       height: 5,
@@ -231,7 +241,10 @@ class _clubadditionState extends State<clubaddition> {
                         validator: (Value) {
                           return Controller.validsport(Value!);
                         },
-                        icon: const Icon(FontAwesomeIcons.futbol),
+                        icon: const Icon(
+                          FontAwesomeIcons.futbol,
+                          color: AppColors.primaryColor,
+                        ),
                         labelText: "Enter sport"),
                     const SizedBox(
                       height: 5,
@@ -243,7 +256,10 @@ class _clubadditionState extends State<clubaddition> {
                         validator: (Value) {
                           return Controller.validphone(Value!);
                         },
-                        icon: const Icon(FontAwesomeIcons.phone),
+                        icon: const Icon(
+                          FontAwesomeIcons.phone,
+                          color: AppColors.black,
+                        ),
                         labelText: "+ code phone number"),
                     const SizedBox(
                       height: 15,
@@ -255,7 +271,10 @@ class _clubadditionState extends State<clubaddition> {
                         validator: (value) {
                           return Controller.validateRating(value);
                         },
-                        icon: const Icon(FontAwesomeIcons.star),
+                        icon: const Icon(
+                          FontAwesomeIcons.star,
+                          color: AppColors.accentColor,
+                        ),
                         labelText: "Enter rating"),
                     const SizedBox(
                       height: 15,

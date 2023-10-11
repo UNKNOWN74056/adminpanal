@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:admin/GETX/Club_Search.dart';
 import 'package:admin/GETX/clubGetx.dart';
 import 'package:admin/clubs/clubdetails.dart';
-import 'package:admin/widget/addclubdata.dart';
+import 'package:admin/clubs/addclubdata.dart';
 import 'package:admin/widget/editclub.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';

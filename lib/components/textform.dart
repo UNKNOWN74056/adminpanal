@@ -13,20 +13,19 @@ class reusebletextfield extends StatelessWidget {
   final initialValue;
   final ontap;
 
-  const reusebletextfield({
-    super.key,
-    this.controller,
-    required this.autoValidateMode,
-    required this.keyboard,
-    this.maxlength,
-    this.maxline = 1,
-    required this.validator,
-    required this.icon,
-    this.initialValue,
-    required this.labelText,
-    this.obscureText = false,
-    this.ontap
-  });
+  const reusebletextfield(
+      {super.key,
+      this.controller,
+      required this.autoValidateMode,
+      required this.keyboard,
+      this.maxlength,
+      this.maxline = 1,
+      required this.validator,
+      required this.icon,
+      this.initialValue,
+      required this.labelText,
+      this.obscureText = false,
+      this.ontap});
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +47,7 @@ class reusebletextfield extends StatelessWidget {
         isDense: true,
         contentPadding: const EdgeInsets.symmetric(vertical: 22),
         prefixIcon: icon,
+        suffixIcon: ontap,
         labelText: labelText,
         hintStyle: const TextStyle(
           color: Colors.grey,
