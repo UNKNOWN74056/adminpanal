@@ -1,5 +1,5 @@
 import 'package:admin/GETX/Search_Engin.dart';
-import 'package:admin/user/User_Detail_Page.dart';
+import 'package:admin/view/user/User_Detail_Page.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';

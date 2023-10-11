@@ -1,6 +1,7 @@
-import 'package:admin/clubs/clubs.dart';
-import 'package:admin/tournament/turnaments.dart';
-import 'package:admin/user/user.dart';
+
+import 'package:admin/view/clubs/clubs.dart';
+import 'package:admin/view/tournament/turnaments.dart';
+import 'package:admin/view//user/user.dart';
 
 import 'package:flutter/material.dart';
 

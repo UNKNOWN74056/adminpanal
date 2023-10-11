@@ -1,14 +1,14 @@
 import 'dart:io';
+import 'package:admin/GETX/clubGetx.dart';
+import 'package:admin/components/savebutton.dart';
+import 'package:admin/components/textform.dart';
 import 'package:admin/utils/colors/App_Colors.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import "package:flutter/material.dart";
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
-import '../GETX/clubGetx.dart';
 import "package:get/get.dart";
-import '../components/savebutton.dart';
-import '../components/textform.dart';
 
 class clubaddition extends StatefulWidget {
   const clubaddition({

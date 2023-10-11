@@ -1,12 +1,12 @@
 import 'package:admin/GETX/Tournament_search.dart';
-import 'package:admin/tournament/addtournament.dart';
-import 'package:admin/tournament/tournamentteam.dart';
+import 'package:admin/view/tournament/addtournament.dart';
+import 'package:admin/view/tournament/tournamentteam.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import '../widget/edittournmaent.dart';
+import '../../widget/edittournmaent.dart';
 import "package:intl/intl.dart";
 
 class turnaments extends StatefulWidget {

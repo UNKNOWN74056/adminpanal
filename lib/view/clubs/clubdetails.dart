@@ -1,5 +1,6 @@
 import 'dart:io';
-import 'package:admin/clubs/Members.dart';
+import 'package:admin/GETX/fullscreen.dart';
+import 'package:admin/view/clubs/Members.dart';
 import 'package:get/get.dart';
 import 'package:admin/GETX/getclubdata.dart';
 import 'package:admin/components/savebutton.dart';
@@ -7,8 +8,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-
-import '../GETX/fullscreen.dart';
 
 class clubdetail extends StatefulWidget {
   final DocumentSnapshot post;
