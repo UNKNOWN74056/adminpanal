@@ -40,10 +40,16 @@ class _Detail_PageState extends State<Detail_Page> {
           title: const Text('Players'),
           content: Column(
             children: approvedOffers.map((offer) {
-              return ListTile(
-                title: Text(offer['email']),
-                // subtitle: Text(offer['description']),
-                // Add more widgets as needed
+              return Card(
+                child: ListTile(
+                  leading: CircleAvatar(
+                    backgroundImage: NetworkImage(offer[
+                        'image']), // Replace with the image URL in your data
+                  ),
+                  title: Text(offer['fullname']),
+                  subtitle: Text(offer['sport']),
+                  // Add more widgets as needed
+                ),
               );
             }).toList(),
           ),
@@ -54,6 +60,7 @@ class _Detail_PageState extends State<Detail_Page> {
                 Navigator.of(context).pop();
               },
             ),
+            const SizedBox(height: 10.0),
           ],
         );
       },
