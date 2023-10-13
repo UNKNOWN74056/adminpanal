@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:admin/GETX/clubGetx.dart';
 import 'package:admin/components/savebutton.dart';
 import 'package:admin/components/textform.dart';
-import 'package:admin/utils/colors/App_Colors.dart';
+import 'package:admin/utils/colors.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import "package:flutter/material.dart";

@@ -1,4 +1,4 @@
-import 'package:admin/utils/colors/App_Colors.dart';
+import 'package:admin/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';

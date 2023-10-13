@@ -1,5 +1,5 @@
 import 'package:admin/GETX/Total_Transection.dart';
-import 'package:admin/utils/colors/App_Colors.dart';
+import 'package:admin/utils/colors.dart';
 import 'package:admin/view/user/Show_User.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

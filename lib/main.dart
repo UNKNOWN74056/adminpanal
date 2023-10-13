@@ -1,4 +1,4 @@
-import 'package:admin/utils/colors/Splash_Screen.dart';
+import 'package:admin/utils/Splash_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';

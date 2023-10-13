@@ -1,7 +1,7 @@
 import 'package:admin/admin.dart';
 import 'package:admin/components/savebutton.dart';
 import 'package:admin/components/textform.dart';
-import 'package:admin/utils/colors/App_Colors.dart';
+import 'package:admin/utils/colors.dart';
 import 'package:admin/view/Sign_Up.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

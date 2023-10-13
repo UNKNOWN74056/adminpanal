@@ -13,11 +13,7 @@ class _BuildCardState extends State<BuildCard> {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        // leading: CircleAvatar(
-        //   radius: 30, // Customize the radius as needed
-        //   backgroundImage:
-        //       NetworkImage('URL_TO_PLAYER_IMAGE'), // Use player's image URL
-        // ),
+    
         title: Text(
           widget.player,
           style: const TextStyle(

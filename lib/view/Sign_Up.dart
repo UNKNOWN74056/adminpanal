@@ -1,6 +1,6 @@
 import 'package:admin/components/savebutton.dart';
 import 'package:admin/components/textform.dart';
-import 'package:admin/utils/colors/App_Colors.dart';
+import 'package:admin/utils/colors.dart';
 import 'package:admin/view/Login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

@@ -21,16 +21,42 @@ class Users extends StatefulWidget {
 class _UsersState extends State<Users> {
   final GlobalKey<FormState> changepasswordkey = GlobalKey<FormState>();
   final changepassword = TextEditingController();
+  final oldpassword = TextEditingController();
   bool isPasswordValid(String value) {
     // Check if the password has at least 6 characters and contains one uppercase letter
     return value.length >= 6 && value.contains(RegExp(r'[A-Z]'));
   }
 
-  Future change_password() async {
-    FirebaseFirestore.instance
+  Future<void> changePassword() async {
+    // Fetch the current user's email
+    final currentUserEmail = FirebaseAuth.instance.currentUser!.email;
+
+    // Fetch the old password from Firestore for the current user
+    DocumentSnapshot adminDoc = await FirebaseFirestore.instance
         .collection("admin")
-        .doc(FirebaseAuth.instance.currentUser!.email)
-        .update({'password': changepassword.text});
+        .doc(currentUserEmail)
+        .get();
+
+    if (adminDoc.exists) {
+      // Retrieve the old password from Firestore
+      String oldPasswordFromFirestore = adminDoc["password"];
+
+      // Compare the old password from Firestore with the old password entered by the user
+      if (oldPasswordFromFirestore == oldpassword.text) {
+        // Old password matches, proceed to change the password
+        await FirebaseFirestore.instance
+            .collection("admin")
+            .doc(currentUserEmail)
+            .update({'password': changepassword.text});
+
+        Get.back(); // Close the bottom sheet
+        Get.snackbar("Message", "Your password is changed");
+      } else {
+        // Old password doesn't match
+        Get.snackbar("Error", "Incorrect old password",
+            backgroundColor: Colors.red, colorText: Colors.white);
+      }
+    }
   }
 
   final totalTransactionController = Get.put(TotalTransactionController());
@@ -47,6 +73,9 @@ class _UsersState extends State<Users> {
             if (adminController.adminDataList.isNotEmpty) {
               final adminData = adminController.adminDataList.first;
               return UserAccountsDrawerHeader(
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage("assets/tabletanis.jpg"))),
                 accountName: Text(adminData.username,
                     style: const TextStyle(fontSize: 20)),
                 accountEmail: Text(adminData.email),
@@ -85,6 +114,17 @@ class _UsersState extends State<Users> {
                                   const SizedBox(
                                     height: 10,
                                   ),
+                                  reusebletextfield(
+                                      controller: oldpassword,
+                                      autoValidateMode:
+                                          AutovalidateMode.onUserInteraction,
+                                      keyboard: TextInputType.emailAddress,
+                                      validator: null,
+                                      icon: const Icon(FontAwesomeIcons.lock),
+                                      labelText: "Enter your old password"),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
                                   //textfields with dailog
                                   reusebletextfield(
                                       controller: changepassword,
@@ -98,7 +138,7 @@ class _UsersState extends State<Users> {
                                         return null;
                                       },
                                       icon: const Icon(FontAwesomeIcons.lock),
-                                      labelText: "Enter your password"),
+                                      labelText: "Enter your new password"),
                                   const SizedBox(
                                     height: 5,
                                   ),
@@ -108,10 +148,10 @@ class _UsersState extends State<Users> {
                                             .validate()) {
                                           Future.delayed(
                                               const Duration(seconds: 3), () {
-                                            change_password();
+                                            changePassword();
                                             Get.back();
-                                            Get.snackbar("Meassage",
-                                                "Your password is changed");
+                                            // Get.snackbar("Meassage",
+                                            //     "Your password is changed");
                                           });
                                         }
                                       },
@@ -143,6 +183,7 @@ class _UsersState extends State<Users> {
         ],
       )),
       appBar: AppBar(
+        elevation: 20,
         centerTitle: true,
         title: const Text("Admin panel"),
         actions: [

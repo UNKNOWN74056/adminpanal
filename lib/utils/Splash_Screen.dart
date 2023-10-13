@@ -1,4 +1,4 @@
-import 'package:admin/utils/colors/Splah_Screen_Service.dart';
+import 'package:admin/utils/Splah_Screen_Service.dart';
 import 'package:flutter/material.dart';
 
 class splashscreen extends StatefulWidget {
