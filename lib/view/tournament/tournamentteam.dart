@@ -1,4 +1,7 @@
+import 'package:admin/utils/colors.dart';
+import 'package:admin/view/tournament/Tournament_Player_Details.dart';
 import 'package:admin/widget/Build_Card.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -8,6 +11,19 @@ class TournamentTeam extends StatefulWidget {
 
   @override
   _TournamentTeamState createState() => _TournamentTeamState();
+}
+
+Future<DocumentSnapshot?> getPlayerDocument(String playerName) async {
+  final QuerySnapshot query = await FirebaseFirestore.instance
+      .collection('users')
+      .where('fullname', isEqualTo: playerName)
+      .get();
+
+  if (query.docs.isNotEmpty) {
+    return query.docs.first;
+  } else {
+    return null;
+  }
 }
 
 class _TournamentTeamState extends State<TournamentTeam> {
@@ -81,9 +97,14 @@ class _TournamentTeamState extends State<TournamentTeam> {
                                       children: [
                                         const Divider(thickness: 1),
                                         for (String player in players)
-                                          BuildCard(
-                                            player: player,
-                                          ) // Replace with player image URL
+                                          GestureDetector(
+                                            onTap: () {
+                                              _navigateToPlayerProfile(player);
+                                            },
+                                            child: BuildCard(
+                                              player: player,
+                                            ),
+                                          )
                                       ],
                                     );
                                   },
@@ -121,5 +142,19 @@ class _TournamentTeamState extends State<TournamentTeam> {
         },
       ),
     );
+  }
+
+  // Function to navigate to player profile page
+  void _navigateToPlayerProfile(String playerName) async {
+    final playerDocument = await getPlayerDocument(playerName);
+    if (playerDocument != null) {
+      // Navigate to player profile page with playerDocument
+
+      Get.to(PlayerProfile(playerDocument: playerDocument));
+    } else {
+      Get.snackbar("Error", "Player does not exist",
+          backgroundColor: AppColors.errorColor, colorText: Colors.white);
+      // Handle the case where the player's details are not found
+    }
   }
 }
