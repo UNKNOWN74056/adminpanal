@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Detail_Page extends StatefulWidget {
@@ -82,7 +83,8 @@ class _Detail_PageState extends State<Detail_Page> {
                 children: [
                   CircleAvatar(
                     radius: 60.0,
-                    backgroundImage: NetworkImage(widget.post['Imageurl']),
+                    backgroundImage:
+                        CachedNetworkImageProvider(widget.post['Imageurl']),
                   ),
                   const SizedBox(height: 10.0),
                   Text(

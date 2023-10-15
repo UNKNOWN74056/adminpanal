@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -47,7 +48,7 @@ class _Club_MembersState extends State<Club_Members> {
                 margin: const EdgeInsets.all(10),
                 child: ListTile(
                   leading: CircleAvatar(
-                    backgroundImage: NetworkImage(
+                    backgroundImage: CachedNetworkImageProvider(
                         user['Imageurl']), // Replace with the user's image URL
                   ),
                   title: Text(user['fullname']),

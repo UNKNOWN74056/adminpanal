@@ -4,6 +4,7 @@ import 'package:admin/GETX/clubGetx.dart';
 import 'package:admin/view/clubs/addclubdata.dart';
 import 'package:admin/view/clubs/clubdetails.dart';
 import 'package:admin/widget/editclub.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -243,7 +244,8 @@ class _clubsState extends State<clubs> {
                                     leading: CircleAvatar(
                                         radius: 35,
                                         backgroundImage:
-                                            NetworkImage(data['Clubimage']),
+                                            CachedNetworkImageProvider(
+                                                data['Clubimage']),
                                         backgroundColor: Colors.white),
                                     subtitle: Text(data["Location"],
                                         style: const TextStyle(fontSize: 15)),

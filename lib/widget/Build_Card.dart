@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class BuildCard extends StatefulWidget {
@@ -16,8 +17,8 @@ class _BuildCardState extends State<BuildCard> {
     return Card(
       child: ListTile(
         leading: CircleAvatar(
-          backgroundImage:
-              NetworkImage(widget.imageUrl), // Display user's image
+          backgroundImage: CachedNetworkImageProvider(
+              widget.imageUrl), // Display user's image
           radius: 15, // Customize the avatar radius as needed
         ),
         title: Text(

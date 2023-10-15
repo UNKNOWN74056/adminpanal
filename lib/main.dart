@@ -24,7 +24,6 @@ class MyApp extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         }
-
         return GetMaterialApp(
             title: 'Flutter Demo',
             theme: ThemeData.light().copyWith(useMaterial3: true),

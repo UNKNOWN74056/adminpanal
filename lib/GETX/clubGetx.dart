@@ -103,11 +103,11 @@ class clubGetx extends GetxController {
     if (rating.isEmpty) {
       return 'Please enter a rating';
     } else if (int.tryParse(rating) == null) {
-      return 'Please enter a valid rating (1-5)';
-    } else if (int.parse(rating) < 1 || int.parse(rating) > 5) {
-      return 'Please enter a rating between 1 and 5';
-    } else if (!RegExp(r'^[1-5]$').hasMatch(rating)) {
-      return 'Please enter a valid rating (1-5)';
+      return 'Please enter a valid rating (0-5)';
+    } else if (int.parse(rating) < 0 || int.parse(rating) > 5) {
+      return 'Please enter a rating between 0 and 5';
+    } else if (!RegExp(r'^[0-5]$').hasMatch(rating)) {
+      return 'Please enter a valid rating (0-5)';
     } else {
       return null;
     }

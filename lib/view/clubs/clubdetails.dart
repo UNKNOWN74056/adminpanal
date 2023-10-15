@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:admin/GETX/fullscreen.dart';
 import 'package:admin/view/clubs/Members.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:get/get.dart';
 import 'package:admin/GETX/getclubdata.dart';
 import 'package:admin/components/savebutton.dart';
@@ -204,7 +205,8 @@ class _clubdetailState extends State<clubdetail> {
                   width: double.infinity,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: NetworkImage(widget.post['Clubimage']),
+                      image:
+                          CachedNetworkImageProvider(widget.post['Clubimage']),
                       fit: BoxFit.cover,
                     ),
                   ),

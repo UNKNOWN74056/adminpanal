@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Show_User extends StatefulWidget {
@@ -146,7 +147,8 @@ class _Show_UserState extends State<Show_User> {
                       Get.to(Detail_Page(post: user));
                     },
                     leading: CircleAvatar(
-                      backgroundImage: NetworkImage(user['Imageurl']),
+                      backgroundImage:
+                          CachedNetworkImageProvider(user['Imageurl']),
                     ),
                     title: Row(
                       children: [

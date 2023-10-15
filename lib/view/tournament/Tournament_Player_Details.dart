@@ -1,4 +1,5 @@
 import 'package:admin/view/user/fetchvideodata.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -31,7 +32,8 @@ class PlayerProfile extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 60.0,
-                    backgroundImage: NetworkImage(playerData['Imageurl']),
+                    backgroundImage:
+                        CachedNetworkImageProvider(playerData['Imageurl']),
                   ),
                   const SizedBox(height: 10.0),
                   Text(
