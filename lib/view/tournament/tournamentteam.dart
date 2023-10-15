@@ -101,10 +101,34 @@ class _TournamentTeamState extends State<TournamentTeam> {
                                             onTap: () {
                                               _navigateToPlayerProfile(player);
                                             },
-                                            child: BuildCard(
-                                              player: player,
+                                            child: FutureBuilder(
+                                              future: getPlayerDocument(player),
+                                              builder:
+                                                  (context, playerSnapshot) {
+                                                if (playerSnapshot
+                                                        .connectionState ==
+                                                    ConnectionState.waiting) {
+                                                  return const CircularProgressIndicator();
+                                                }
+                                                if (playerSnapshot.hasData) {
+                                                  var user = playerSnapshot
+                                                          .data!
+                                                          .data()
+                                                      as Map<String, dynamic>;
+                                                  var imageUrl =
+                                                      user['Imageurl'];
+                                                  return BuildCard(
+                                                    player: player,
+                                                    imageUrl:
+                                                        imageUrl, // Pass the image URL to BuildCard
+                                                  );
+                                                } else {
+                                                  return const Text(
+                                                      'User not found');
+                                                }
+                                              },
                                             ),
-                                          )
+                                          ),
                                       ],
                                     );
                                   },

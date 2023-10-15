@@ -33,6 +33,7 @@ class _tournamentadditionState extends State<tournamentaddition> {
     String email,
     String fee,
   ) async {
+    DateTime tournmaentcreation = DateTime.now();
     await FirebaseFirestore.instance
         .collection('tournaments')
         .doc(tourcontroller.email_controller.text)
@@ -46,6 +47,7 @@ class _tournamentadditionState extends State<tournamentaddition> {
       'price': int.tryParse(price) ?? 0,
       'email': tourcontroller.email.value,
       'fee': int.tryParse(fee) ?? 0,
+      'creation': Timestamp.fromDate(tournmaentcreation)
     });
   }
 

@@ -3,6 +3,7 @@ import 'package:admin/components/textform.dart';
 import 'package:admin/utils/colors.dart';
 import 'package:admin/view/Login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -25,6 +26,17 @@ class _SignupPageState extends State<SignupPage> {
 
   //signup function
   Future<void> signUp() async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const Center(
+          child: SpinKitFadingCircle(
+            color: Colors.green,
+            size: 50.0,
+          ),
+        );
+      },
+    );
     if (!emailRegExp.hasMatch(email.text)) {
       Get.snackbar(
         "Invalid Email",
@@ -65,6 +77,8 @@ class _SignupPageState extends State<SignupPage> {
           'email': email.text,
           'password': password.text,
         });
+        Navigator.of(context).pop();
+        Get.to(const Login_page());
       } else {
         print('Registration failed');
       }
@@ -76,6 +90,7 @@ class _SignupPageState extends State<SignupPage> {
           backgroundColor: Colors.red,
           colorText: Colors.white,
         );
+        Navigator.of(context).pop();
       } else if (e.code == 'email-already-in-use') {
         Get.snackbar(
           "Email",
@@ -83,6 +98,7 @@ class _SignupPageState extends State<SignupPage> {
           backgroundColor: Colors.red,
           colorText: Colors.white,
         );
+        Navigator.of(context).pop();
       } else {
         print('Error: ${e.code}');
       }

@@ -4,6 +4,7 @@ import 'package:admin/components/textform.dart';
 import 'package:admin/utils/colors.dart';
 import 'package:admin/view/Sign_Up.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -29,6 +30,17 @@ class _Login_pageState extends State<Login_page> {
   }
 
   Future login() async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const Center(
+          child: SpinKitFadingCircle(
+            color: Colors.green,
+            size: 50.0,
+          ),
+        );
+      },
+    );
     if (!emailRegExp.hasMatch(email.text)) {
       Get.snackbar(
         "Invalid Email",
@@ -58,6 +70,7 @@ class _Login_pageState extends State<Login_page> {
         email: email.text,
         password: password.text,
       );
+      Navigator.of(context).pop();
       Get.to(const MyAdminPage());
     } on FirebaseAuthException catch (e) {
       // Handle FirebaseAuth exceptions
@@ -100,7 +113,7 @@ class _Login_pageState extends State<Login_page> {
                   const Padding(
                     padding: EdgeInsets.only(right: 180, top: 30),
                     child: Text(
-                      "Login",
+                      "Admin",
                       style: TextStyle(fontSize: 50),
                     ),
                   ),
