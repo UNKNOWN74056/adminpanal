@@ -19,8 +19,9 @@ class turnaments extends StatefulWidget {
 }
 
 class _turnamentsState extends State<turnaments> {
-  DateTime selecteddata = DateTime.now();
+  DateTime selectedStartDate = DateTime.now(); // Selected start date
   bool showAllEvents = false;
+  DateTime currentDate = DateTime.now(); // Current date
 
   @override
   Widget build(BuildContext context) {
@@ -35,27 +36,28 @@ class _turnamentsState extends State<turnaments> {
                 onTap: () async {
                   final selectedDateTime = await showDatePicker(
                     context: context,
-                    initialDate: selecteddata,
+                    initialDate: selectedStartDate,
                     firstDate: DateTime(2023),
                     lastDate: DateTime(2025),
                   );
 
                   if (selectedDateTime != null) {
                     setState(() {
-                      selecteddata = selectedDateTime;
+                      selectedStartDate = selectedDateTime;
                     });
                   }
                 },
                 child: const Icon(
                   Icons.calendar_today,
                   color: AppColors.successColor,
-                ), // Calendar button icon
+                ),
               ),
               const SizedBox(
-                  width:
-                      10), // Add some spacing between the button and the title
+                width: 10,
+              ),
               const Flexible(
-                  child: Center(child: Text("Tournaments"))), // Tournament name
+                child: Center(child: Text("Tournaments")),
+              ),
             ],
           ),
           actions: [
@@ -70,7 +72,6 @@ class _turnamentsState extends State<turnaments> {
             ),
           ],
         ),
-        //floating action button
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         floatingActionButton: FloatingActionButton(
           onPressed: () {
@@ -110,15 +111,18 @@ class _turnamentsState extends State<turnaments> {
                   .snapshots(),
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.hasData) {
-                  // Filter events based on selected date or show all events
+                  // Filter events based on selected date range
                   final events = showAllEvents
                       ? snapshot.data!.docs
                       : snapshot.data!.docs.where((event) {
-                          Timestamp eventDateTimestamp = event['creation'];
-                          DateTime eventDate = eventDateTimestamp.toDate();
-                          return eventDate.year == selecteddata.year &&
-                              eventDate.month == selecteddata.month &&
-                              eventDate.day == selecteddata.day;
+                          Timestamp eventCreationTimestamp = event['creation'];
+                          DateTime eventCreationDate =
+                              eventCreationTimestamp.toDate();
+
+                          // Check if the creation date of the event is within the range
+                          return !eventCreationDate
+                                  .isBefore(selectedStartDate) &&
+                              !eventCreationDate.isAfter(currentDate);
                         }).toList();
 
                   return ListView.builder(
